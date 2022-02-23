@@ -1,6 +1,6 @@
 <template>
-  <InfoView v-bind:InforObj2="InforObj" v-if="InforObj"/>
-  <HotRecomd v-bind:lts="hotRecommedLts" v-bind:flagid="4" />
+  <InfoView v-bind:InforObj2="InforObj" v-if="InforObj" />
+  <HotRecomd v-bind:lts="hotRecommedLts" v-bind:flagid="512" v-if="hotRecommedLts.length>0"/>
   <searchItem
     v-bind:shopLtsMore="shopLtsMore"
     v-bind:searchName="searchName"
@@ -10,17 +10,24 @@
     @_typeTagchangeBtnParent="_typeTagchangeBtn"
     @changeCurrentPageParent="changeCurPage"
   >
-    <template v-slot:action-search>
-      <div class="in-tab-change-model">
+    <template v-slot:tabBox>
+      <div
+        class="tabBox"
+        v-bind:class="{
+          tabBoxCurrent01: flagId == 0,
+          tabBoxCurrent02: flagId == 128,
+        }"
+      >
         <span
-          v-for="(item, index) in productTypeLts"
-          v-bind:key="index"
-          v-bind:class="{ current: item.Class_id == classid }"
-          @click="_changeCid(item.Class_id)"
+          v-bind:class="{ current01: flagId == 0 }"
+          @click="tabCustomShop('普通商品')"
+          >普通商品</span
         >
-          <i>{{ item.Class_name }}</i>
-          <em>({{ item.Goods_count }})</em>
-        </span>
+        <span
+          v-bind:class="{ current01: flagId == 128 }"
+          @click="tabCustomShop('定制商品')"
+          >定制商品</span
+        >
       </div>
     </template>
   </searchItem>
@@ -34,21 +41,32 @@ export default {
   data() {
     return {
       productTypeLts: [],
-      classid: 3,
-      pid: 3
+      classid: this.$route.query.cid,
+      flagId: 0,
+      pid:this.$route.query.cid
     };
   },
   mounted() {
-    this._dotaRecomment(this.classid,4);
+    this._dotaRecomment(this.classid, 512);
     this._seachFlagPager();
-    this._ClassInfoByCid(); 
+     this._ClassInfoByCid(); 
   },
   methods: {
-
+    tabCustomShop(val) {
+      if (val == "普通商品") {
+        this.flagId = 0;
+        this.searchName = "";
+        this._seachFlagPager();
+      } else if (val == "定制商品") {
+        this.flagId = 128;
+        this.searchName = "";
+        this._seachFlagPager();
+      }
+    },
   },
   components: {
     HotRecomd,
-    searchItem
+    searchItem,
   },
 };
 </script>

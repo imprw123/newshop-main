@@ -1,7 +1,6 @@
 <template>
   <div class="listModelContainer">
-
-    <HotRecomd v-bind:lts="hotRecommedLts"/>
+    <HotRecomd v-bind:lts="hotRecommedLts" v-bind:flagid="4" />
     <searchItem
       v-bind:shopLtsMore="shopLtsMore"
       v-bind:searchName="searchName"
@@ -58,11 +57,11 @@ export default {
       hotRecommedLts: [],
       productTypeLts: [],
       classid: 1,
-      pid: 1
+      pid: 1,
     };
   },
   mounted() {
-    this._dotaRecomment(this.classid);
+    this._dotaRecomment(this.classid, 4);
     this._ClassInfoByCid();
     this._seachFlagPager();
   },
@@ -85,7 +84,7 @@ export default {
   },
   components: {
     searchItem,
-    HotRecomd
+    HotRecomd,
   },
 };
 </script>

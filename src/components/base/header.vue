@@ -13,10 +13,18 @@
       <span v-bind:class="{ current: currentName == 'IMBA' }">
         <router-link :to="{ path: '/IMBA' }">IMBA</router-link>
       </span>
-      <span v-bind:class="{ current: currentName == 'ShopRpg' }">
+      <span
+        v-bind:class="{
+          current: currentName == 'ShopRpg' || currentName == 'shopRpgDt',
+        }"
+      >
         <router-link :to="{ path: '/shopRpg' }">RPG商店</router-link>
       </span>
-      <span>我的订单</span>
+    </div>
+    <div class="my-order">
+      <span v-bind:class="{ current: currentName == 'myOrder' }">
+        <router-link :to="{ path: '/myOrder' }">我的订单</router-link>
+      </span>
     </div>
   </div>
 </template>
@@ -59,6 +67,43 @@ export default {
         color: #dfdfdf;
         display: block;
         cursor: pointer;
+      }
+      a:hover {
+        color: #3dbeff;
+        font-weight: bold;
+      }
+    }
+    span.current {
+      a {
+        color: #3dbeff;
+        font-weight: bold;
+      }
+    }
+  }
+  .my-order {
+    width: 240px;
+    height: 45px;
+    line-height: 45px;
+    float: left;
+    text-align: right;
+    padding-right: 50px;
+    span {
+      text-align: center;
+      color: #dfdfdf;
+      font-size: 18px;
+      font-family: "微软雅黑";
+      cursor: pointer;
+      a {
+        width: 100%;
+        height: 100%;
+        font-family: "微软雅黑";
+        color: #dfdfdf;
+        display: block;
+        cursor: pointer;
+      }
+      a:hover {
+        color: #3dbeff;
+        font-weight: bold;
       }
     }
     span.current {

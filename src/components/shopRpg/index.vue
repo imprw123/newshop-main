@@ -1,7 +1,12 @@
 <template>
   <div class="adver-rpg">
-    <div class="adver-rpg-left"></div>
-    <div class="adver-rpg-right"></div>
+    <div class="adver-rpg-left" id="mydivRpg"></div>
+    <div class="adver-rpg-right">
+      <div id="mydivRpg01"></div>
+      <div id="mydivRpg02"></div>
+      <div id="mydivRpg03"></div>
+      <div id="mydivRpg04"></div>
+    </div>
   </div>
   <div class="rpgShop">
     <b>RPG商店</b>
@@ -63,6 +68,7 @@
 <script>
 import rpgItem from "../base/rpg-item.vue";
 import { QueryRPGBySearchPager } from "../../api/request";
+import YYAD from "../../plugins/YYAD";
 export default {
   data() {
     return {
@@ -116,8 +122,23 @@ export default {
   },
   mounted() {
     this._QueryRPGBySearchPager();
+   // this._YYAD();
   },
   methods: {
+    _YYAD() {
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      try {
+        var jsCodeNode = document.createTextNode(
+          `${YYAD.LoadAds(1436, null, null, "#mydivRpg")}`
+        );
+        script.appendChild(jsCodeNode);
+      } catch (e) {
+        script.text = code;
+      }
+      document.getElementById("mydivRpg").appendChild(script);
+    },
+
     _QueryRPGBySearchPager() {
       console.log(this.valName);
       QueryRPGBySearchPager(
@@ -169,13 +190,23 @@ export default {
     height: 310px;
     float: left;
     overflow: hidden;
-    background-color: #000;
+    // background-color: #000;
   }
   .adver-rpg-right {
     width: 526px;
     height: 310px;
     float: right;
-    background-color: #000;
+    // background-color: #000;
+    ul li {
+      width: 258px;
+      height: 151px;
+      float: left;
+      margin-right: 10px;
+      margin-bottom: 7px;
+    }
+    ul li.current {
+      margin-right: 0px;
+    }
   }
 }
 .rpgShop {
@@ -184,7 +215,7 @@ export default {
   margin: 36px 0px;
   b {
     float: left;
-    width: 200px;
+    width: 120px;
     height: 33px;
     line-height: 33px;
     text-align: left;

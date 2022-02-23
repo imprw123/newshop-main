@@ -49,11 +49,10 @@ export default {
     };
   },
   mounted() {
-
-   //  debugger
+    //  debugger
     if (this.InforObj2.Class_GoodsCount) {
       this.InforObj2.Class_GoodsCount.map((obj, index) => {
-       // debugger;
+        // debugger;
         if (obj.Flag == 128) {
           this.msg = true;
           this.orderShopCount = obj.Count;
@@ -112,6 +111,13 @@ export default {
       overflow: hidden;
       zoom: 1;
       margin-bottom: 15px;
+      span {
+        padding: 0 4px;
+        background-color: #a56262;
+        color: #fff;
+        font-size: 12px;
+        font-family: "微软雅黑";
+      }
     }
     .num-infor {
       color: #9d9d9d;

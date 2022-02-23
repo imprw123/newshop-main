@@ -1,6 +1,6 @@
 <template>
   <div class="dota">
-    <h1><em>热门推荐</em></h1>
+    <h1><em>{{flagid == 4?'热门推荐':flagid == 512?'新手推荐':''}}</em></h1>
     <ul class="model01">
       <li
         v-for="(item, index) in lts"
@@ -21,6 +21,10 @@ export default{
         lts:{
             type:Array,
             default:[]
+        },
+        flagid:{
+          type:Number,
+          default:4
         }
     },
     mounted(){

@@ -16,8 +16,8 @@ let BaseFn = {
     },
     methods: {
         //dota商品推荐
-        _dotaRecomment(cid) {
-            dotaRecomment(cid).then((res) => {
+        _dotaRecomment(cid, flagid) {
+            dotaRecomment(cid, flagid).then((res) => {
                 console.log(res);
                 this.hotRecommedLts = res.data.list;
             });

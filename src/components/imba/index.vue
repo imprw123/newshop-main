@@ -1,6 +1,6 @@
 <template>
   <InfoView v-bind:InforObj2="InforObj" v-if="InforObj"/>
-  <HotRecomd v-bind:lts="hotRecommedLts" />
+  <HotRecomd v-bind:lts="hotRecommedLts" v-bind:flagid="4" />
   <searchItem
     v-bind:shopLtsMore="shopLtsMore"
     v-bind:searchName="searchName"
@@ -39,7 +39,7 @@ export default {
     };
   },
   mounted() {
-    this._dotaRecomment(this.classid);
+    this._dotaRecomment(this.classid,4);
     this._seachFlagPager();
     this._ClassInfoByCid(); 
   },

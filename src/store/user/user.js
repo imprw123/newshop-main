@@ -1,19 +1,37 @@
 import { createStore } from 'vuex'
+import { Login } from '../../api/request'
+import VueCookies from 'vue-cookies'
 const getDefaultState = () => {
     return {
-        token: "",
-        name: '',
-        avatar: ''
+        Token: "",
+        UserName: '',
+        UserId: ''
     }
 }
+const state = getDefaultState();
 const mutations = {
-
+    SET_TOKEN: (state, token) => {
+        VueCookies.set("use_path_argument", token);
+    },
+    SET_USERINFO: (state, { Token, UserName, UserId }) => {
+        state.Token = Token;
+        state.UserName = UserName;
+        state.UserId = UserId;
+    }
 };
 const actions = {
+    async getNowUser({ commit }) {
+        let result = await Login();
+        if (result.code == 0) {
+            commit('SET_TOKEN', result.data.Token);
+            commit('SET_USERINFO', result.data);
+            return result;
+        } else {
+            return result;
+        }
 
+    }
 };
-
-const state = getDefaultState();
 
 export default createStore({
     state,

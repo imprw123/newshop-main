@@ -28,7 +28,7 @@
         <span class="lf">{{ typeName(item.Category) }}</span>
       </div>
       <div class="enterShop">
-        <a href="#/rpg?cid=1592" class="">进入商店</a>
+        <router-link :to="{path:'/shopRpgDt',query:{'cid':item.Class_id}}">进入商店</router-link>
       </div>
     </div>
   </div>

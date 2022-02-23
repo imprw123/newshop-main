@@ -1,8 +1,29 @@
 <template>
   <div class="Home">
     <div class="main-banner">
-      <div class="advertisement"></div>
-      <div class="bannerShow_right"></div>
+      <div class="advertisement" id="mydiv"></div>
+      <div class="bannerShow_right">
+        <h1>
+          <i class="icon01"></i>
+          <span>新品推荐</span>
+        </h1>
+        <div class="tpic_show">
+          <em class="jingxi"></em>
+          <div class="imgContainer">
+            <img v-bind:src="newRecomment.Goods_imgPath" />
+          </div>
+          <h4>{{ newRecomment.Goods_disName }}</h4>
+          <p>
+            <em>秒杀价：</em>
+            <b>
+              ￥
+              <i>{{ newRecomment.Goods_price }}</i>
+            </b>
+            <i>{{ newRecomment.Unit }}</i>
+          </p>
+          <a href="javascript:;" class="qg">立即抢购</a>
+        </div>
+      </div>
     </div>
     <!-- 限时抢购部分 -->
     <div class="limit-buy">
@@ -81,7 +102,7 @@
     <!-- rpg底图推荐 -->
 
     <!-- 平台推荐服务 -->
-     <div class="dota">
+    <div class="dota">
       <h1><em>平台推荐服务</em> <span class="more">进入平台服务</span></h1>
       <ul class="model01">
         <li
@@ -101,7 +122,14 @@
 <script>
 import shopItem from "../base/shop-item.vue";
 import rpgItem from "../base/rpg-item.vue";
-import { limtBuy, hotRank, dotaRecomment,ptRecoment } from "../../api/request";
+import {
+  limtBuy,
+  hotRank,
+  dotaRecomment,
+  ptRecoment,
+  goodsByFlag,
+} from "../../api/request";
+import YYAD from "../../plugins/YYAD";
 export default {
   data() {
     return {
@@ -110,7 +138,8 @@ export default {
       currentFlag: true,
       dotaLts: [],
       rpgList: [],
-      ptLts:[]
+      ptLts: [],
+      newRecomment: "",
     };
   },
   mounted() {
@@ -119,8 +148,20 @@ export default {
     this._dotaRecomment();
     this.rpg();
     this._ptRecoment();
+    this._YYAD();
+    this._goodsByFlag();
   },
   methods: {
+    //新品推荐
+    _goodsByFlag() {
+      goodsByFlag().then((res) => {
+        if (res.code == 0) {
+          this.newRecomment = res.data.list[0];
+        } else {
+          this.newRecomment = "";
+        }
+      });
+    },
     //限时抢购
     _limtBuy() {
       limtBuy().then((res) => {
@@ -135,6 +176,20 @@ export default {
         this.fastRank();
         this.currentFlag = false;
       }
+    },
+    //广告
+    _YYAD() {
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      try {
+        var jsCodeNode = document.createTextNode(
+          `${YYAD.LoadAds(1436, null, null, "#mydiv")}`
+        );
+        script.appendChild(jsCodeNode);
+      } catch (e) {
+        script.text = code;
+      }
+      document.getElementById("mydiv").appendChild(script);
     },
     //畅销排行
     fastRank() {
@@ -157,7 +212,7 @@ export default {
     },
     //dota商品推荐
     _dotaRecomment() {
-      dotaRecomment(3).then((res) => {
+      dotaRecomment(3, 4).then((res) => {
         console.log(res);
         this.dotaLts = res.data.list;
       });
@@ -208,6 +263,86 @@ export default {
       background-color: #fff;
       float: right;
       border: 1px solid #dbdbdb;
+      h1 {
+        width: 258px;
+        height: 34px;
+        border-bottom: 1px solid #f2f2f2;
+        padding-left: 20px;
+        i.icon01 {
+          width: 20px;
+          height: 20px;
+          background: url("../../assets/images/icon.png");
+          float: left;
+          margin-top: 7px;
+        }
+        span {
+          float: left;
+          font-size: 14px;
+          color: #2bb8aa;
+          margin-top: 7px;
+          margin-left: 14px;
+        }
+      }
+      .tpic_show {
+        width: 278px;
+        overflow: hidden;
+        zoom: 1;
+        padding-top: 19px;
+        position: relative;
+        em {
+          color: #666666;
+        }
+        .jingxi {
+          width: 24px;
+          height: 66px;
+          background: url("../../assets/images/jingxi.png");
+          display: block;
+          position: absolute;
+          top: -1px;
+          right: 20px;
+        }
+        .imgContainer {
+          width: 158px;
+          height: 158px;
+          margin: 0 auto;
+          position: relative;
+          img {
+            width: 158px;
+            height: 158px;
+            display: block;
+          }
+        }
+        h4 {
+          text-align: center;
+          color: #3d3d3d;
+          font-size: 16px;
+          margin-top: 9px;
+        }
+        p {
+          font-size: 12px;
+          color: #333;
+          text-align: center;
+          margin-top: 25px;
+          b {
+            color: #f74a4a;
+            font-size: 18px;
+            font-family: Arial;
+          }
+        }
+        .qg {
+          width: 238px;
+          height: 30px;
+          margin: 0 auto;
+          display: block;
+          text-align: center;
+          line-height: 30px;
+          background-color: #ff6633;
+          border: 1px solid #ea450e;
+          color: #fff;
+          font-size: 14px;
+          margin-top: 18px;
+        }
+      }
     }
   }
   .limit-buy {
