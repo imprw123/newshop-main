@@ -129,7 +129,7 @@ import {
   ptRecoment,
   goodsByFlag,
 } from "../../api/request";
-import YYAD from "../../plugins/YYAD";
+import {YYAD} from "../../plugins/YYAD";
 export default {
   data() {
     return {
@@ -148,7 +148,7 @@ export default {
     this._dotaRecomment();
     this.rpg();
     this._ptRecoment();
-    this._YYAD();
+    this._YYAD('mydiv',1436);
     this._goodsByFlag();
   },
   methods: {
@@ -178,18 +178,19 @@ export default {
       }
     },
     //广告
-    _YYAD() {
+    _YYAD(name,tid) {
+      document.getElementById(""+name+"").innerHTML="";
       var script = document.createElement("script");
       script.type = "text/javascript";
       try {
         var jsCodeNode = document.createTextNode(
-          `${YYAD.LoadAds(1436, null, null, "#mydiv")}`
+          `${YYAD.LoadAds(tid, null, null, "#"+name+"")}`
         );
         script.appendChild(jsCodeNode);
       } catch (e) {
         script.text = code;
       }
-      document.getElementById("mydiv").appendChild(script);
+      document.getElementById(""+name+"").appendChild(script);
     },
     //畅销排行
     fastRank() {

@@ -150,4 +150,4 @@ YYAD.RequestKV = function(f) {
 
 
 
-export default YYAD
+export { YYAD }

@@ -2,10 +2,12 @@
   <div class="adver-rpg">
     <div class="adver-rpg-left" id="mydivRpg"></div>
     <div class="adver-rpg-right">
-      <div id="mydivRpg01"></div>
-      <div id="mydivRpg02"></div>
-      <div id="mydivRpg03"></div>
-      <div id="mydivRpg04"></div>
+      <ul>
+        <li id="mydivRpg01"></li>
+        <li class="current" id="mydivRpg02"></li>
+        <li id="mydivRpg03"></li>
+        <li class="current" id="mydivRpg04"></li>
+      </ul>
     </div>
   </div>
   <div class="rpgShop">
@@ -68,7 +70,7 @@
 <script>
 import rpgItem from "../base/rpg-item.vue";
 import { QueryRPGBySearchPager } from "../../api/request";
-import YYAD from "../../plugins/YYAD";
+import { YYAD } from "../../plugins/YYAD";
 export default {
   data() {
     return {
@@ -122,23 +124,30 @@ export default {
   },
   mounted() {
     this._QueryRPGBySearchPager();
-   // this._YYAD();
+    this.$nextTick(() => {
+      this._YYAD("mydivRpg", 1467);
+      this._YYAD("mydivRpg01", 1468);
+      this._YYAD("mydivRpg02", 1469);
+      this._YYAD("mydivRpg03", 1470);
+      this._YYAD("mydivRpg04", 1471);
+    });
   },
   methods: {
-    _YYAD() {
-      var script = document.createElement("script");
+    _YYAD(name, tid) {
+      document.getElementById("" + name + "").innerHTML = "";
+      let script = document.createElement("script");
       script.type = "text/javascript";
       try {
-        var jsCodeNode = document.createTextNode(
-          `${YYAD.LoadAds(1436, null, null, "#mydivRpg")}`
+        let jsCodeNode = document.createTextNode(
+          `${YYAD.LoadAds(tid, null, null, "#" + name + "")}`
         );
         script.appendChild(jsCodeNode);
       } catch (e) {
-        script.text = code;
+        console.log(e);
       }
-      document.getElementById("mydivRpg").appendChild(script);
-    },
 
+      document.getElementById("" + name + "").appendChild(script);
+    },
     _QueryRPGBySearchPager() {
       console.log(this.valName);
       QueryRPGBySearchPager(
