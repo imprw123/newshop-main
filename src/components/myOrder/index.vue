@@ -27,7 +27,7 @@
               v-bind:class="{ hasPay: value[0].Order_Pay_status == 0 }"
               >{{ value[0].Order_Pay_status == 0 ? "待付款" : "已付款" }}</em
             >
-            <em class="payDetailBtn" v-on:click="QueryOrderPayInfo(name)"
+            <em class="payDetailBtn" v-on:click="_QueryOrderPayInfo(name)"
               >付款明细>></em
             >
           </span>
@@ -62,14 +62,73 @@
       </div>
     </div>
   </div>
-  <div class="payForMoldel"></div>
+  <transition name="fade">
+    <div class="payForMoldel" v-show="payForFlag">
+      <div class="in-payForDetail">
+        <div class="payForDetail-hd">
+          <span>付款明细</span>
+          <em class="payForDetail-close" v-on:click="payForFlag = false">×</em>
+        </div>
+        <div class="payForDetail-main">
+          <div class="payForDetail-mainHd">
+            <div class="payFor-row">
+              <span>订单号:</span>
+              <span>{{ detailDataObj.OrderId }}</span>
+            </div>
+            <div class="payFor-row"></div>
+            <div class="payFor-row">
+              <span>订单价格:</span>
+              <span class="fr">{{ `￥${detailDataObj.Order_price}` }} </span>
+            </div>
+            <div class="payFor-row">
+              <span>优惠金额:</span>
+              <span class="fr">{{ `￥${Pay_price}` }}</span>
+            </div>
+            <div class="payFor-row">
+              <span>订单金额:</span>
+              <span class="fr rd">{{
+                `￥${(
+                  Number(detailDataObj.Order_price) - Number(Pay_price)
+                ).toFixed(2)}`
+              }}</span>
+            </div>
+            <div class="payFor-row">
+              <span>支付明细</span>
+            </div>
+          </div>
+          <div class="payForDetail-mainbd">
+            <div class="payFor-row">
+              <span>通宝抵扣:</span>
+              <span class="fr">{{ `￥${tongbaoPay_price}` }}</span>
+            </div>
+            <div class="payFor-row">
+              <span>妖豆抵扣:</span>
+              <span class="fr">{{ `￥${yaodouPay_price}` }}</span>
+            </div>
+            <div class="payFor-row">
+              <span>现金支付:</span>
+              <span class="fr">{{ `￥${detailDataObj.Order_Pay_price}` }}</span>
+            </div>
+          </div>
+          <div class="payForDetail-sure" v-on:click="payForFlag = false">
+            确定
+          </div>
+        </div>
+      </div>
+    </div>
+  </transition>
 </template>
 <script>
-import { QueryUserOrder } from "../../api/request";
+import { QueryUserOrder, QueryOrderPayInfo } from "../../api/request";
 export default {
   data() {
     return {
       groupLists: {},
+      payForFlag: false,
+      detailDataObj: {},
+      Pay_price: 0,
+      tongbaoPay_price: 0,
+      yaodouPay_price: 0,
     };
   },
   mounted() {
@@ -111,11 +170,64 @@ export default {
       });
       console.log(this.groupLists);
     },
+    _QueryOrderPayInfo(oid) {
+      this.Pay_price = 0;
+      this.tongbaoPay_price = 0;
+      this.yaodouPay_price = 0;
+      QueryOrderPayInfo(oid).then((res) => {
+        if (res.code == 0) {
+          this.payForFlag = true;
+          this.detailDataObj = res.data;
+          if (res.data.Order_Pay_info.length == 0) {
+            this.Pay_price = 0;
+            this.tongbaoPay_price = 0;
+            this.yaodouPay_price = 0;
+          } else {
+            let item = res.data.Order_Pay_info.find((item) => {
+              return item.Pay_type == 1;
+            });
+            if (item) {
+              this.Pay_price = item.Pay_price;
+            } else {
+              this.Pay_price = 0;
+            }
+
+            res.data.Order_Pay_info.map((current) => {
+              if (current.Pay_type == 3) {
+                this.tongbaoPay_price = current.Pay_price;
+              } else if (current.Pay_type == 2) {
+                this.yaodouPay_price = current.Pay_price;
+              } else {
+                this.tongbaoPay_price = 0;
+                this.yaodouPay_price = 0;
+              }
+            });
+          }
+        }
+      });
+    },
   },
 };
 </script>
 
 <style lang="less">
+.fade-enter-active {    //类名：隐藏到显示过程所需要的时间
+ animation: bounce-in 0.5s;
+}
+.fade-leave-active {    //类名：显示到隐藏过程所需要的时间
+ animation: bounce-in 0.5s reverse;   //reverse表示和隐藏到显示动画相反
+}
+@keyframes bounce-in {
+ 0% {
+  transform: scale(0);
+ }
+ 50% {
+  transform: scale(1.2);
+ }
+ 100% {
+  transform: scale(1);
+ }
+}
 .orderContainer {
   width: 100%;
   overflow: hidden;
@@ -257,6 +369,109 @@ export default {
           float: left;
           font-size: 12px;
         }
+      }
+    }
+  }
+}
+.payForMoldel {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 10;
+  .in-payForDetail {
+    width: 392px;
+    height: 377px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border-radius: 5px;
+    transform: translate(-50%, -50%);
+    background: url(../../assets/images/paydetail.png);
+    border: 1px solid #2c5d77;
+    border-radius: 2px;
+    .payForDetail-hd {
+      width: 100%;
+      height: 26px;
+      line-height: 26px;
+      color: #fff;
+      font-size: 12px;
+      font-family: "微软雅黑";
+      span {
+        float: left;
+        margin-left: 8px;
+      }
+      .payForDetail-close {
+        width: 26px;
+        height: 26px;
+        line-height: 26px;
+        text-align: center;
+        float: right;
+        color: #fefffa;
+        font-weight: bold;
+        font-size: 20px;
+        cursor: pointer;
+      }
+    }
+    .payForDetail-main {
+      width: 320px;
+      height: 350px;
+      margin: 0 auto;
+      padding: 0 35px;
+      .payForDetail-mainHd {
+        margin-top: 15px;
+        height: 174px;
+        width: 100%;
+        .payFor-row {
+          width: 100%;
+          overflow: hidden;
+          zoom: 1;
+          margin-bottom: 14px;
+          font-size: 12px;
+          color: #868686;
+          span {
+            float: left;
+          }
+          span.fr {
+            float: right;
+          }
+        }
+      }
+      .payForDetail-mainbd {
+        width: 100%;
+        height: 86px;
+        padding-top: 14px;
+        .payFor-row {
+          width: 100%;
+          overflow: hidden;
+          zoom: 1;
+          margin-bottom: 14px;
+          font-size: 12px;
+          color: #868686;
+          span {
+            float: left;
+          }
+          span.fr {
+            float: right;
+          }
+        }
+      }
+      .payForDetail-sure {
+        width: 105px;
+        height: 28px;
+        line-height: 28px;
+        margin: 0 auto;
+        text-align: center;
+        font-family: "微软雅黑";
+        background-color: #7799c2;
+        color: #ffffff;
+        font-size: 12px;
+        border-radius: 6px;
+        margin-top: 15px;
+        cursor: pointer;
       }
     }
   }

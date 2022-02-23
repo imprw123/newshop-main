@@ -42,5 +42,8 @@ export function QueryRPGBySearchPager(category, firstword, valName, pi, ps) {
 //-------------我的订单接口
 export function QueryUserOrder() {
     return get(`${api.order.QueryUserOrder}`)
+}
+export function QueryOrderPayInfo(oid) {
+    return get(`${api.order.QueryOrderPayInfo}?orderId=${oid}`)
 
 }
