@@ -6,6 +6,7 @@ import IMBA from '../views/imba.vue'
 import SHOPRPG from '../views/shopRpg.vue'
 import SHOPRPGDT from '../views/shopRpgDt.vue'
 import MYORDER from '../views/myOrder.vue'
+import DETAIL from '../views/detail.vue'
 import user from "../store/user/user"
 import VueCookies from 'vue-cookies'
 const routes = [{
@@ -60,6 +61,14 @@ const routes = [{
         path: '/myOrder',
         name: 'myOrder',
         component: MYORDER,
+        meta: {
+            cheakIsLogin: true
+        }
+    },
+    {
+        path: '/detail',
+        name: 'detail',
+        component: DETAIL,
         meta: {
             cheakIsLogin: true
         }
