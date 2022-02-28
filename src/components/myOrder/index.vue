@@ -251,7 +251,7 @@ export default {
 }
 .orderContainer {
   width: 100%;
- min-height:800px;
+  min-height: 800px;
   .orderContainer-hd {
     width: 100%;
     height: 40px;
@@ -324,11 +324,11 @@ export default {
             height: 66px;
             background-color: #000;
             float: left;
-            
+
             img {
               width: 66px;
               height: 66px;
-                border-radius:4px;
+              border-radius: 4px;
             }
           }
           .row01-infor {
