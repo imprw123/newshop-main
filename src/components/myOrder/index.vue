@@ -324,6 +324,7 @@ export default {
             height: 66px;
             background-color: #000;
             float: left;
+            
             img {
               width: 66px;
               height: 66px;
