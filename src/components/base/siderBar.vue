@@ -35,6 +35,27 @@
           ></li>
         </ul>
       </div>
+      <div class="siderHd">
+          <span>购物车</span>
+      </div>
+      <div class="sider-xian"></div>
+      <div class="siderBd">
+        <div class="totalBox">
+          <div class="totalBox-left">
+            <p>
+              <em>1</em>
+            </p>
+            <p>
+              共计
+              <b>￥188.00</b>
+            </p>
+          </div>
+          <div class="totalBox-right">
+            <a href="#/shopCar" class="">去购物车结算</a>
+          </div>
+        </div>
+        <div class="silder-shop"></div>
+      </div>
     </div>
   </div>
 </template>
@@ -145,11 +166,32 @@ export default {
       ul li.silder03 {
         background: url(../../assets/images/silder03.png);
       }
+      ul li.silder03:hover {
+        background: url(../../assets/images/silder03-hover.png);
+        transition: 0.2s ease;
+      }
+      ul li.silder03Current {
+        background: url(../../assets/images/silder03-hover.png);
+      }
       ul li.silder04 {
         background: url(../../assets/images/silder04.png);
       }
+      ul li.silder04:hover {
+        background: url(../../assets/images/silder04-hover.png);
+        transition: 0.2s ease;
+      }
+      ul li.silder04Current {
+        background: url(../../assets/images/silder04-hover.png);
+      }
       ul li.silder05 {
         background: url(../../assets/images/silder05.png);
+      }
+      ul li.silder05:hover {
+        background: url(../../assets/images/silder05-hover.png);
+        transition: 0.2s ease;
+      }
+      ul li.silder05Current {
+        background: url(../../assets/images/silder05-hover.png);
       }
     }
   }
@@ -157,5 +199,13 @@ export default {
 .siderBoxCurrent {
   right: 0px;
   transition: 0.5s ease;
+}
+.siderHd{
+  width: 300px;
+    height: 21px;
+    background-color: #053249;
+    font-size: 12px;
+    color: #dfdfdf;
+    font-family: "微软雅黑";
 }
 </style>
