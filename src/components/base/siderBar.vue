@@ -1,23 +1,92 @@
 <template>
-  <div class="siderBox siderBoxCurrent">
+  <div
+    class="siderBox"
+    v-bind:class="{ siderBoxCurrent: Flag01 || Flag02 || Flag03 || Flag04 }"
+  >
     <div class="siderBar">
       <div class="silderBtn">
         <ul>
-          <li class="silder01" style=""></li>
-          <li class="silder02"><i class="ci-count">0</i></li>
-          <li class="silder03"></li>
-          <li class="silder04"></li>
-          <li class="silder05"></li>
+          <li
+            class="silder01"
+            v-show="Flag01 || Flag02 || Flag03 || Flag04"
+            v-on:click="closeFixed"
+          ></li>
+          <li
+            class="silder02"
+            v-on:click="openFixed('购物车')"
+            v-bind:class="{ silder02Current: Flag01 }"
+          >
+            <i class="ci-count">0</i>
+          </li>
+          <li
+            class="silder03"
+            v-on:click="openFixed('搜索')"
+            v-bind:class="{ silder03Current: Flag02 }"
+          ></li>
+          <li
+            class="silder04"
+            v-on:click="openFixed('搜藏')"
+            v-bind:class="{ silder04Current: Flag03 }"
+          ></li>
+          <li
+            class="silder05"
+            v-on:click="openFixed('优惠券')"
+            v-bind:class="{ silder05Current: Flag04 }"
+          ></li>
         </ul>
       </div>
     </div>
   </div>
 </template>
+<script>
+export default {
+  data() {
+    return {
+      Flag01: false,
+      Flag02: false,
+      Flag03: false,
+      Flag04: false,
+    };
+  },
+  methods: {
+    closeFixed() {
+      this.Flag01 = false;
+      this.Flag02 = false;
+      this.Flag03 = false;
+      this.Flag04 = false;
+    },
+    openFixed(val) {
+      if (val == "购物车") {
+        this.Flag01 = true;
+        this.Flag02 = false;
+        this.Flag03 = false;
+        this.Flag04 = false;
+      } else if (val == "搜索") {
+        this.Flag01 = false;
+        this.Flag02 = true;
+        this.Flag03 = false;
+        this.Flag04 = false;
+      } else if (val == "搜藏") {
+        this.Flag01 = false;
+        this.Flag02 = false;
+        this.Flag03 = true;
+        this.Flag04 = false;
+      } else if (val == "优惠券") {
+        this.Flag01 = false;
+        this.Flag02 = false;
+        this.Flag03 = false;
+        this.Flag04 = true;
+      }
+    },
+  },
+};
+</script>
+
 <style lang="less">
 .siderBox {
   position: fixed;
   top: 0px;
-  right: 0px;
+  right: -300px;
   transition: 0.5s ease;
   z-index: 1;
   .siderBar {
@@ -42,6 +111,10 @@
       ul li.silder01 {
         background: url(../../assets/images/bigBack.png);
       }
+      ul li.silder01:hover {
+        background: url(../../assets/images/bigBack-hover.png);
+        transition: 0.2s ease;
+      }
       ul li.silder02 {
         background: url(../../assets/images/silder02.png);
         position: relative;
@@ -62,6 +135,13 @@
           text-align: center;
         }
       }
+      ul li.silder02:hover {
+        background: url(../../assets/images/silder02-hover.png);
+        transition: 0.2s ease;
+      }
+      ul li.silder02Current {
+        background: url(../../assets/images/silder02-hover.png);
+      }
       ul li.silder03 {
         background: url(../../assets/images/silder03.png);
       }
@@ -75,7 +155,7 @@
   }
 }
 .siderBoxCurrent {
-  right: -300px;
+  right: 0px;
   transition: 0.5s ease;
 }
 </style>

@@ -1,7 +1,9 @@
 <template>
   <div class="modelbox">
     <div class="img-box">
-      <img v-bind:src="item.Goods_imgPath" class="pic" />
+      <router-link :to="{ path: '/detail', query: { cid: item.Goods_id } }">
+        <img v-bind:src="item.Goods_imgPath" class="pic" />
+      </router-link>
       <div class="money">
         ￥ <b>{{ item.Goods_price }}</b
         ><span
@@ -15,12 +17,14 @@
       <div class="action">
         <span class="shopcar" v-if="item.Class_id != 583">+ 购物车</span>
         <span class="send" v-if="item.Class_id != 583">赠送</span>
-        <span class="ljgm" v-bind:class="{ 'ljgmCurrent': item.Class_id == 583 }"
+        <span class="ljgm" v-bind:class="{ ljgmCurrent: item.Class_id == 583 }"
           >立即购买</span
         >
       </div>
       <div class="xian"></div>
-      <div class="mapName"><i></i><span>{{item.Class_name}}</span></div>
+      <div class="mapName">
+        <i></i><span>{{ item.Class_name }}</span>
+      </div>
     </div>
   </div>
 </template>
@@ -33,12 +37,10 @@ export default {
     },
   },
   data() {
-    return {
-
-    };
+    return {};
   },
   mounted() {
-   // console.log(this.item);
+    console.log(this.item);
   },
 };
 </script>
@@ -55,6 +57,11 @@ export default {
       width: 160px;
       height: 160px;
       display: block;
+      border-radius: 4px;
+    }
+    .pic:hover {
+      transform: scale(1.05);
+      transition: 1s ease;
     }
     .money {
       font-size: 12px;
@@ -103,6 +110,7 @@ export default {
       height: 21px;
       border: 1px solid #dbdbdb;
       margin: 2px 0px;
+
       span.shopcar {
         width: 56px;
         height: 21px;
@@ -137,6 +145,12 @@ export default {
       }
       span.ljgmCurrent {
         width: 100%;
+      }
+      span:hover {
+        background-color: #f74a4a;
+        color: #fff;
+        transition: 0.2s ease;
+        cursor: pointer;
       }
     }
     .xian {

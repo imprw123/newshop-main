@@ -11,6 +11,11 @@ import mixinBase from "../mixin/mixin";
 import DetailView from "../components/Detail/index.vue"
 export default {
   mixins: [mixinBase],
+  data(){
+      return{
+          breadCurmbName:''
+      }
+  },
   mounted() {
     this.breadCurmbName = this.$route.name;
   },
@@ -19,3 +24,11 @@ export default {
   }
 };
 </script>
+<style lang="less">
+.detail{
+    width: 1080px;
+    overflow: hidden;
+    zoom: 1;
+    margin: 0 auto;
+}
+</style>

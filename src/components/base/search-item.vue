@@ -68,7 +68,7 @@
           <shopItem v-bind:item="item" />
         </li>
       </ul>
-      <el-pagination background layout="prev, pager, next" :total="total"  @current-change="handleCurrentChange">
+      <el-pagination background layout="prev, pager, next" :total="total"  @current-change="handleCurrentChange" v-show="total>0">
       </el-pagination>
     </div>
   </div>

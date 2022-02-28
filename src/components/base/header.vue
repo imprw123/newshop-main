@@ -84,9 +84,8 @@ export default {
     width: 240px;
     height: 45px;
     line-height: 45px;
-    float: left;
+    float: right;
     text-align: right;
-    padding-right: 50px;
     span {
       text-align: center;
       color: #dfdfdf;

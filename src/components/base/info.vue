@@ -85,6 +85,7 @@ export default {
     img {
       width: 205px;
       height: 129px;
+      border-radius:4px;
     }
   }
   .indetail-infor {

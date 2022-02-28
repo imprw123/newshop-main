@@ -6,7 +6,14 @@
       ><span style="width: 217px">发放状态</span
       ><span style="width: 254px">发放对象</span>
     </div>
-    <div class="orderContainer-bd">
+    <div
+      class="orderContainer-bd"
+      v-loading="loading"
+      element-loading-text="拼命加载中..."
+      :element-loading-spinner="svg"
+      element-loading-svg-view-box="-10, -10, 50, 50"
+      element-loading-background="rgba(0, 0, 0, 0)"
+    >
       <div
         class="rowBox"
         v-for="(value, name, index) in groupLists"
@@ -129,6 +136,17 @@ export default {
       Pay_price: 0,
       tongbaoPay_price: 0,
       yaodouPay_price: 0,
+      loading: true,
+      svg: `
+        <path class="path" d="
+          M 30 15
+          L 28 17
+          M 25.61 25.61
+          A 15 15, 0, 0, 1, 15 30
+          A 15 15, 0, 1, 1, 27.99 7.5
+          L 15 15
+        " style="stroke-width: 4px; fill: rgba(0, 0, 0, 0)"/>
+      `,
     };
   },
   mounted() {
@@ -167,6 +185,7 @@ export default {
             this.groupLists[item.Order_id].push(item);
           }
         });
+        this.loading = false;
       });
       console.log(this.groupLists);
     },
@@ -211,27 +230,28 @@ export default {
 </script>
 
 <style lang="less">
-.fade-enter-active {    //类名：隐藏到显示过程所需要的时间
- animation: bounce-in 0.5s;
+.fade-enter-active {
+  //类名：隐藏到显示过程所需要的时间
+  animation: bounce-in 0.5s;
 }
-.fade-leave-active {    //类名：显示到隐藏过程所需要的时间
- animation: bounce-in 0.5s reverse;   //reverse表示和隐藏到显示动画相反
+.fade-leave-active {
+  //类名：显示到隐藏过程所需要的时间
+  animation: bounce-in 0.5s reverse; //reverse表示和隐藏到显示动画相反
 }
 @keyframes bounce-in {
- 0% {
-  transform: scale(0);
- }
- 50% {
-  transform: scale(1.2);
- }
- 100% {
-  transform: scale(1);
- }
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 .orderContainer {
   width: 100%;
-  overflow: hidden;
-  zoom: 1;
+ min-height:800px;
   .orderContainer-hd {
     width: 100%;
     height: 40px;
@@ -307,6 +327,7 @@ export default {
             img {
               width: 66px;
               height: 66px;
+                border-radius:4px;
             }
           }
           .row01-infor {

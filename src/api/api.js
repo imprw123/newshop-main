@@ -17,4 +17,7 @@ export default {
         QueryUserOrder: 'Query/QueryUserOrder',
         QueryOrderPayInfo: 'query/QueryOrderPayInfo'
     },
+    detail: {
+        QueryGoodsById: 'Query/QueryGoodsById'
+    },
 }

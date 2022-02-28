@@ -11,7 +11,19 @@ let BaseFn = {
             shopLtsMore: [],
             total: 0,
             InforObj: null,
-            hotRecommedLts: []
+            hotRecommedLts: [],
+            loading: true,
+            loading2: true,
+            svg: `
+        <path class="path" d="
+          M 30 15
+          L 28 17
+          M 25.61 25.61
+          A 15 15, 0, 0, 1, 15 30
+          A 15 15, 0, 1, 1, 27.99 7.5
+          L 15 15
+        " style="stroke-width: 4px; fill: rgba(0, 0, 0, 0)"/>
+      `,
         }
     },
     methods: {
@@ -20,6 +32,7 @@ let BaseFn = {
             dotaRecomment(cid, flagid).then((res) => {
                 console.log(res);
                 this.hotRecommedLts = res.data.list;
+                this.loading2 = false;
             });
         },
         //平台服务商品推荐
@@ -60,6 +73,7 @@ let BaseFn = {
                 console.log(res);
                 this.total = res.data.count;
                 this.shopLtsMore = res.data.list;
+                this.loading = false;
             });
         },
         _changeCid(val) {

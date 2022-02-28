@@ -1,6 +1,14 @@
 <template>
   <div class="listModelContainer">
-    <HotRecomd v-bind:lts="hotRecommedLts" v-bind:flagid="4" />
+    <HotRecomd
+      v-bind:lts="hotRecommedLts"
+      v-bind:flagid="4"
+      v-loading="loading2"
+      element-loading-text="拼命加载中..."
+      :element-loading-spinner="svg"
+      element-loading-svg-view-box="-10, -10, 50, 50"
+      element-loading-background="rgba(0, 0, 0, 0)"
+    />
     <searchItem
       v-bind:shopLtsMore="shopLtsMore"
       v-bind:searchName="searchName"
@@ -9,6 +17,11 @@
       v-bind:sortName="sortName"
       @_typeTagchangeBtnParent="_typeTagchangeBtn"
       @changeCurrentPageParent="changeCurPage"
+      v-loading="loading"
+      element-loading-text="拼命加载中..."
+      :element-loading-spinner="svg"
+      element-loading-svg-view-box="-10, -10, 50, 50"
+      element-loading-background="rgba(0, 0, 0, 0)"
     >
       <template v-slot:tabBox>
         <div

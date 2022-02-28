@@ -7,7 +7,7 @@
           <i class="icon01"></i>
           <span>新品推荐</span>
         </h1>
-        <div class="tpic_show">
+        <div class="tpic_show" v-show="newRecomment">
           <em class="jingxi"></em>
           <div class="imgContainer">
             <img v-bind:src="newRecomment.Goods_imgPath" />
@@ -27,7 +27,14 @@
     </div>
     <!-- 限时抢购部分 -->
     <div class="limit-buy">
-      <div class="limit-buy-left">
+      <div
+        class="limit-buy-left"
+        v-loading="loading"
+        element-loading-text="拼命加载中..."
+        :element-loading-spinner="svg"
+        element-loading-svg-view-box="-10, -10, 50, 50"
+        element-loading-background="rgba(0, 0, 0, 0)"
+      >
         <span class="limintBg"> </span>
         <ul class="model01">
           <li v-for="(item, index) in lts" :key="index">
@@ -51,7 +58,11 @@
         <ol>
           <li v-for="(item, index) in rankList" :key="index">
             <div class="img-left">
-              <img v-bind:src="item.Goods_imgPath" />
+              <router-link
+                :to="{ path: '/detail', query: { cid: item.Goods_id } }"
+              >
+                <img v-bind:src="item.Goods_imgPath" />
+              </router-link>
             </div>
             <div class="infor-right">
               <h2>{{ item.Goods_disName }}</h2>
@@ -129,7 +140,7 @@ import {
   ptRecoment,
   goodsByFlag,
 } from "../../api/request";
-import {YYAD} from "../../plugins/YYAD";
+import { YYAD } from "../../plugins/YYAD";
 export default {
   data() {
     return {
@@ -140,6 +151,17 @@ export default {
       rpgList: [],
       ptLts: [],
       newRecomment: "",
+      loading: true,
+      svg: `
+        <path class="path" d="
+          M 30 15
+          L 28 17
+          M 25.61 25.61
+          A 15 15, 0, 0, 1, 15 30
+          A 15 15, 0, 1, 1, 27.99 7.5
+          L 15 15
+        " style="stroke-width: 4px; fill: rgba(0, 0, 0, 0)"/>
+      `,
     };
   },
   mounted() {
@@ -148,7 +170,7 @@ export default {
     this._dotaRecomment();
     this.rpg();
     this._ptRecoment();
-    this._YYAD('mydiv',1436);
+    this._YYAD("mydiv", 1436);
     this._goodsByFlag();
   },
   methods: {
@@ -166,6 +188,7 @@ export default {
     _limtBuy() {
       limtBuy().then((res) => {
         this.lts = res.data.list;
+        this.loading = false;
       });
     },
     tabchangebat(val) {
@@ -178,19 +201,19 @@ export default {
       }
     },
     //广告
-    _YYAD(name,tid) {
-      document.getElementById(""+name+"").innerHTML="";
+    _YYAD(name, tid) {
+      document.getElementById("" + name + "").innerHTML = "";
       var script = document.createElement("script");
       script.type = "text/javascript";
       try {
         var jsCodeNode = document.createTextNode(
-          `${YYAD.LoadAds(tid, null, null, "#"+name+"")}`
+          `${YYAD.LoadAds(tid, null, null, "#" + name + "")}`
         );
         script.appendChild(jsCodeNode);
       } catch (e) {
         script.text = code;
       }
-      document.getElementById(""+name+"").appendChild(script);
+      document.getElementById("" + name + "").appendChild(script);
     },
     //畅销排行
     fastRank() {
@@ -311,6 +334,7 @@ export default {
             width: 158px;
             height: 158px;
             display: block;
+            border-radius: 4px;
           }
         }
         h4 {
@@ -416,6 +440,11 @@ export default {
           img {
             width: 50px;
             height: 50px;
+            border-radius:4px;
+          }
+          img:hover{
+            transform: scale(1.05);
+            transition:1s ease;
           }
         }
         .infor-right {
@@ -467,6 +496,9 @@ export default {
         font-family: "微软雅黑";
         padding-left: 30px;
       }
+      .more:hover {
+        cursor: pointer;
+      }
     }
     ul.model01 li {
       width: 160px;
@@ -475,6 +507,14 @@ export default {
       padding: 15px 24px 0px 24px;
       float: left;
       margin-right: 10px;
+    }
+    ul.model01 li:hover {
+      -webkit-transform: translateY(-5px);
+      -moz-transform: translateY(-5px);
+      -ms-transform: translateY(-5px);
+      -o-transform: translateY(-5px);
+      transform: translateY(-5px);
+      transition: 0.5s ease;
     }
   }
   .rpg {
@@ -512,6 +552,9 @@ export default {
         color: #fff;
         font-family: "微软雅黑";
         padding-left: 30px;
+      }
+      .more:hover {
+        cursor: pointer;
       }
     }
   }

@@ -28,7 +28,9 @@
         <span class="lf">{{ typeName(item.Category) }}</span>
       </div>
       <div class="enterShop">
-        <router-link :to="{path:'/shopRpgDt',query:{'cid':item.Class_id}}">进入商店</router-link>
+        <router-link :to="{ path: '/shopRpgDt', query: { cid: item.Class_id } }"
+          >进入商店</router-link
+        >
       </div>
     </div>
   </div>
@@ -66,9 +68,7 @@ export default {
     },
   },
   data() {
-    return {
-    
-    };
+    return {};
   },
 };
 </script>
@@ -82,6 +82,11 @@ export default {
     height: 79px;
     display: block;
     float: left;
+    border-radius: 4px;
+  }
+  .imgShow:hover {
+    transform: scale(1.05);
+    transition: 1s ease;
   }
   .rpg-left {
     width: 96px;
@@ -123,7 +128,18 @@ export default {
         display: block;
         width: 100%;
         height: 100%;
+        color: #aa2828;
       }
+    }
+    .enterShop:hover {
+      color: #d09614;
+      background-color: #fff;
+      border: 1px solid #d09614;
+      transition:0.2s ease;
+    }
+    .enterShop:hover a {
+      color: #d09614;
+      transition:0.2s ease;
     }
   }
 }

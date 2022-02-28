@@ -47,3 +47,7 @@ export function QueryOrderPayInfo(oid) {
     return get(`${api.order.QueryOrderPayInfo}?orderId=${oid}`)
 
 }
+//----------详情页面接口
+export function QueryGoodsById(goodsId) {
+    return get(`${api.detail.QueryGoodsById}?goodsId=${goodsId}`);
+}
