@@ -36,7 +36,7 @@
         </ul>
       </div>
       <div class="siderHd">
-          <span>购物车</span>
+        <span>购物车</span>
       </div>
       <div class="sider-xian"></div>
       <div class="siderBd">
@@ -200,12 +200,69 @@ export default {
   right: 0px;
   transition: 0.5s ease;
 }
-.siderHd{
+.siderHd {
   width: 300px;
+  height: 21px;
+  background-color: #053249;
+  font-size: 12px;
+  color: #dfdfdf;
+  font-family: "微软雅黑";
+  span {
+    float: left;
     height: 21px;
-    background-color: #053249;
-    font-size: 12px;
-    color: #dfdfdf;
+    line-height: 21px;
+    color: #4a819d;
     font-family: "微软雅黑";
+    font-size: 12px;
+    margin-left: 10px;
+  }
+}
+.sider-xian {
+  width: 300px;
+  height: 1px;
+  background: url(../../assets/images/xian.jpg);
+}
+.siderBd {
+  width: 300px;
+  height: 864px;
+  position: relative;
+  .totalBox {
+    width: 300px;
+    height: 45px;
+    background-color: #053249;
+    .totalBox-left {
+      padding-left: 10px;
+      float: left;
+      color: #fff;
+      font-size: 14px;
+      p {
+        height: 22px;
+        line-height: 25px;
+        b {
+          color: #f74a4a;
+        }
+      }
+    }
+    .totalBox-right {
+      width: 97px;
+      height: 47px;
+      line-height: 47px;
+      margin-right: 10px;
+      float: right;
+      a {
+        width: 94px;
+        height: 22px;
+        background-color: #7799c2;
+        border: 1px solid #778da6;
+        display: inline-block;
+        color: #fff;
+        font-size: 12px;
+        border-radius: 4px;
+        line-height: 22px;
+        text-align: center;
+        font-family: "微软雅黑";
+      }
+    }
+  }
 }
 </style>
