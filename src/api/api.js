@@ -20,4 +20,10 @@ export default {
     detail: {
         QueryGoodsById: 'Query/QueryGoodsById'
     },
+    shopCar: {
+        QueryUserWebCartGoods: 'Query/QueryUserWebCartGoods',
+        AddWebCartGoods: 'do/AddWebCartGoods',
+        DeductWebCartGoods: 'do/DeductWebCartGoods',
+        RemoveWebCartGoods: 'do/RemoveWebCartGoods'
+    },
 }

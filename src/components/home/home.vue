@@ -280,6 +280,7 @@ export default {
       height: 360px;
       float: left;
       background-color: #000;
+      box-shadow:2.86px 6.67px 16.29px rgba(0,0,0,0.7);
     }
     .bannerShow_right {
       width: 278px;
@@ -287,6 +288,7 @@ export default {
       background-color: #fff;
       float: right;
       border: 1px solid #dbdbdb;
+      box-shadow:2.86px 6.67px 16.29px rgba(0,0,0,0.7);
       h1 {
         width: 258px;
         height: 34px;
@@ -374,6 +376,7 @@ export default {
     width: 1080px;
     height: 320px;
     margin-top: 20px;
+    box-shadow:2.86px 6.67px 16.29px rgba(0,0,0,0.7);
     .limit-buy-left {
       width: 768px;
       height: 304px;
@@ -477,6 +480,7 @@ export default {
     margin-top: 20px;
     overflow: hidden;
     zoom: 1;
+    //box-shadow:2.86px 6.67px 16.29px rgba(0,0,0,0.7);
     h1 {
       font-size: 18px;
       color: #fff;

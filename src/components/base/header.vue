@@ -1,5 +1,9 @@
 <template>
-  <div class="header">
+  <div
+    class="header"
+    id="searchBar"
+    v-bind:class="{ isFiexed: searchBarFixed }"
+  >
     <div class="inHeader">
       <span v-bind:class="{ current: currentName == 'Index' }">
         <router-link :to="{ path: '/' }">首页</router-link>
@@ -33,20 +37,60 @@ export default {
   data() {
     return {
       currentName: "",
+      searchBarFixed: false,
     };
   },
   mounted() {
     this.currentName = this.$route.name;
     console.log(this.$route);
+    window.addEventListener("scroll", this.handleScroll);
+  },
+  methods: {
+    handleScroll() {
+      debugger;
+      var scrollTop =
+        window.pageYOffset ||
+        document.documentElement.scrollTop ||
+        document.body.scrollTop;
+      var offsetTop = document.querySelector("#searchBar").offsetTop;
+      if (scrollTop > offsetTop) {
+        this.searchBarFixed = true;
+      } else {
+        this.searchBarFixed = false;
+      }
+    },
+    destroyed() {
+      window.removeEventListener("scroll", this.handleScroll);
+    },
   },
 };
 </script>
 
 <style lang="less">
+.isFiexed {
+  position: fixed;
+  top: 0px;
+  z-index: 999;
+ -webkit-animation: shake-data 0.5s linear ;
+ animation: shake-data 0.5s linear ;
+}
+@keyframes shake-data{
+  0%{
+    transform:scale(1);
+  }
+  50%{
+    transform: scale(1.02);
+  }
+  100%{
+    transform: scale(1);
+  }
+}
 .header {
   width: 1080px;
   height: 45px;
+  box-shadow: 2.86px 6.67px 16.29px rgba(0, 0, 0, 0.5);
   background: #053249;
+
   .inHeader {
     width: 790px;
     height: 45px;

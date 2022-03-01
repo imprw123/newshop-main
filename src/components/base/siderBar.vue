@@ -39,27 +39,16 @@
         <span>购物车</span>
       </div>
       <div class="sider-xian"></div>
-      <div class="siderBd">
-        <div class="totalBox">
-          <div class="totalBox-left">
-            <p>
-              <em>1</em>
-            </p>
-            <p>
-              共计
-              <b>￥188.00</b>
-            </p>
-          </div>
-          <div class="totalBox-right">
-            <a href="#/shopCar" class="">去购物车结算</a>
-          </div>
-        </div>
-        <div class="silder-shop"></div>
-      </div>
+     <component v-bind:is="showBox"></component>
+
+    
     </div>
   </div>
 </template>
 <script>
+import siderCar from './siderBar-path/sider-Car.vue'
+import searchAll from './siderBar-path/search-All.vue'
+import collected from './siderBar-path/collected.vue'
 export default {
   data() {
     return {
@@ -67,6 +56,7 @@ export default {
       Flag02: false,
       Flag03: false,
       Flag04: false,
+      showBox:"siderCar"
     };
   },
   methods: {
@@ -100,6 +90,11 @@ export default {
       }
     },
   },
+  components:{
+    siderCar,
+    searchAll,
+    collected
+  }
 };
 </script>
 
@@ -262,6 +257,112 @@ export default {
         text-align: center;
         font-family: "微软雅黑";
       }
+    }
+  }
+  .silder-shop {
+    width: 284px;
+    padding: 8px;
+    height: 796px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    ul li {
+      width: 265px;
+      height: 74px;
+      margin: 0 auto;
+      background-color: #fff;
+      border: 1px solid #ebebeb;
+      padding: 9px 0px 0px 9px;
+      margin-bottom: 5px;
+      .shop-left {
+        width: 66px;
+        height: 66px;
+        background-color: #000;
+        float: left;
+        img {
+          width: 66px;
+          height: 66px;
+          border-radius: 4px;
+        }
+      }
+      .shop-right {
+        width: 186px;
+        height: 66px;
+        float: left;
+        padding-left: 10px;
+        h4 {
+          font-size: 14px;
+          color: #3a3f4a;
+          font-weight: normal;
+          font-family: "微软雅黑";
+          margin-bottom: 5px;
+        }
+        p {
+          color: #a9a9a9;
+          font-size: 12px;
+          font-family: "微软雅黑";
+          margin-bottom: 5px;
+          width: 100%;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          b {
+            color: #ff0808;
+          }
+        }
+      }
+    }
+  }
+  .pageSearch {
+    width: 274px;
+    height: 32px;
+    line-height: 32px;
+    display: block;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 4px;
+    margin-top: 50px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    color: #a9a9a9;
+    font-family: "微软雅黑";
+    font-size: 14px;
+    text-align: center;
+  }
+  .quickSearch {
+    width: 102px;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    color: #fff;
+    font-family: "微软雅黑";
+    background-color: #7799c2;
+    margin: 0 auto;
+    margin-top: 20px;
+    font-size: 12px;
+    cursor: pointer;
+    border-radius: 4px;
+    a {
+      color: #fff;
+      font-family: "微软雅黑";
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .sider-rpg {
+    width: 284px;
+    padding: 8px;
+    height: 796px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    ul li {
+      width: 274px;
+      height: 93px;
+      background-color: #fff;
+      float: left;
+      padding: 15px 0px 0px 8px;
+      margin: 0 auto;
+      border: 1px solid #ebebeb;
+      margin-bottom: 5px;
     }
   }
 }
