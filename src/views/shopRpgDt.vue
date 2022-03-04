@@ -1,28 +1,29 @@
 <template>
   <div class="dotaContainer">
     <Header />
-    <BreadCurmb v-bind:breadCurmbName="breadCurmbName"/>
-   <RpgChilren/>
+    <BreadCurmb v-bind:breadCurmbName="breadCurmbName" />
+    <RpgChilren />
     <SiderBar />
   </div>
 </template>
 <script>
 import mixinBase from "../mixin/mixin";
-import RpgChilren from "../components/shopRpg/rpgChildren.vue"
+import RpgChilren from "../components/shopRpg/rpgChildren.vue";
 export default {
   name: "IMBA",
   mixins: [mixinBase],
   data() {
-      return{
-          breadCurmbName:''
-      }
+    return {
+      breadCurmbName: "",
+    };
   },
-  mounted(){
-      this.breadCurmbName=this.$route.name;
-     // console.log(this.$route.name)
+  mounted() {
+    this.breadCurmbName = this.$route.name;
+    // console.log(this.$route.name)
   },
+  methods: {},
   components: {
-      RpgChilren
+    RpgChilren,
   },
 };
 </script>
@@ -30,5 +31,7 @@ export default {
 .dotaContainer {
   width: 1080px;
   margin: 0 auto;
+  position: relative;
+  z-index: 2;
 }
 </style>

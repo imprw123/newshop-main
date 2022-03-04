@@ -1,42 +1,67 @@
 <template>
-     <div class="siderBd" >
-        <div class="totalBox">
-          <div class="totalBox-left">
-            <p>
-              <em>1</em>
-            </p>
-            <p>
-              共计
-              <b>￥188.00</b>
-            </p>
-          </div>
-          <div class="totalBox-right">
-            <a href="#/shopCar" class="">去购物车结算</a>
-          </div>
-        </div>
-        <div class="silder-shop">
-          <ul>
-            <li>
-              <div class="shop-left">
-                <img
-                  src="https://img.5211game.com/5211/shop/Goods/Basic/29955.jpg"
-                  alt=""
-                />
-              </div>
-              <div class="shop-right">
-                <h4>苏生大帝·骷髅王</h4>
-                <p><b>￥188.00</b></p>
-                <p><em>苏生大帝·骷髅王</em></p>
-              </div>
-            </li>
-          </ul>
-        </div>
+  <div class="siderBd">
+    <div class="totalBox">
+      <div class="totalBox-left">
+        <p>
+          <em>{{ totalNumberFn }}</em>
+        </p>
+        <p>
+          共计
+          <b>{{ `￥${totalMoneyFn}` }}</b>
+        </p>
       </div>
+      <div class="totalBox-right">
+        <a href="#/shopCar" class="">去购物车结算</a>
+      </div>
+    </div>
+    <div class="silder-shop">
+      <ul>
+        <li v-for="(item, index) in shopCarBoxFn" v-bind:key="index">
+          <div class="shop-left">
+            <img v-bind:src="item.Goods_imgPath" alt="" />
+          </div>
+          <div class="shop-right">
+            <h4>{{ `${item.Goods_disName}*${item.Goods_amount}` }}</h4>
+            <p>
+              <b>{{ `￥${item.Goods_price}` }}</b>
+            </p>
+            <p>
+              <em>{{ item.Goods_profile }}</em>
+            </p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
 </template>
 <script>
-export default{
-  
-}
+import { mapActions, mapGetters } from "vuex";
+export default {
+  data() {
+    return {
+      
+    };
+  },
+  mounted() {
+    this._QueryUserWebCartGoods();
+  },
+  computed: {
+    ...mapGetters("shopInfo", {
+      totalMoneyFn: "totalMoneyFn",
+      totalNumberFn: "totalNumberFn",
+      shopCarBoxFn:"shopCarBoxFn"
+    }),
+  },
+  methods: {
+    ...mapActions("shopInfo", {
+      shop_Car: "shop_Car",
+    }),
+
+    _QueryUserWebCartGoods() {
+      this.shop_Car();
+    },
+  },
+};
 </script>
 
 <style lang="less">

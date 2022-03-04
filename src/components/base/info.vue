@@ -8,13 +8,15 @@
         <span>{{ InforObj2.Class_name }}</span>
         <div
           class="scGame"
-          v-if="rpg == 'RPG'"
+          v-if="rpg == 'shopRpgDt'"
           v-show="InforObj2.IsCollected == 0"
+          @click="AddCollectedRPG(InforObj2.Class_id)"
         ></div>
         <div
           class="ysc"
-          v-if="rpg == 'RPG'"
+          v-if="rpg == 'shopRpgDt'"
           v-show="InforObj2.IsCollected != 0"
+          @click="RemoveCollectedRPG(InforObj2.Class_id)"
         ></div>
       </div>
       <div class="quanBox"></div>
@@ -28,10 +30,27 @@
         <span v-if="msg">{{ `定制商品(${orderShopCount})` }}</span>
       </div>
     </div>
-    <a href="" class="jryx"></a>
+    <a
+      class="jryx"
+      href="qfyygame:///type=enter_game_channel/?channelId=1"
+      v-if="this.$route.name == 'DOTA'"
+    ></a>
+    <a
+      class="jryx"
+      href="qfyygame:///type=enter_game_channel/?channelId=6"
+      v-if="this.$route.name == 'IMBA'"
+    ></a>
+    <a
+      class="jryx"
+      v-bind:href="InforObj2.Agreement"
+      v-if="this.$route.name == 'shopRpgDt'"
+    ></a>
   </div>
 </template>
 <script>
+import { AddCollectedRPG, RemoveCollectedRPG } from "../../api/request";
+import { ElMessage } from "element-plus";
+import { ElLoading } from "element-plus";
 export default {
   props: {
     InforObj2: {
@@ -67,6 +86,49 @@ export default {
       this.msg = false;
     }
   },
+  methods: {
+    AddCollectedRPG(val) {
+      const loading = ElLoading.service({
+        lock: true,
+        text: "Loading",
+        background: "rgba(0, 0, 0, 0.5)",
+      });
+      AddCollectedRPG(val).then((res) => {
+        if (res.code == 0) {
+          loading.close();
+          ElMessage({
+            message: "收藏成功!",
+            type: "success",
+          });
+        } else {
+          loading.close();
+          ElMessage.error(`收藏失败,${res.msg}!`);
+        }
+
+        this.$emit("initInfo");
+      });
+    },
+    RemoveCollectedRPG(val) {
+      const loading = ElLoading.service({
+        lock: true,
+        text: "Loading",
+        background: "rgba(0, 0, 0, 0.5)",
+      });
+      RemoveCollectedRPG(val).then((res) => {
+        if (res.code == 0) {
+          loading.close();
+          ElMessage({
+            message: "取消收藏成功!",
+            type: "success",
+          });
+        } else {
+          loading.close();
+          ElMessage.error(`取消收藏失败,${res.msg}!`);
+        }
+         this.$emit("initInfo");
+      });
+    },
+  },
 };
 </script>
 
@@ -85,7 +147,7 @@ export default {
     img {
       width: 205px;
       height: 129px;
-      border-radius:4px;
+      border-radius: 4px;
     }
   }
   .indetail-infor {
@@ -100,6 +162,29 @@ export default {
         color: #000;
         font-size: 14px;
         float: left;
+      }
+      .scGame {
+        width: 49px;
+        height: 15px;
+        background: url("../../assets/images/sc.png");
+        float: left;
+        margin-left: 10px;
+        position: relative;
+        top: 2px;
+        cursor: pointer;
+      }
+      .scGame:hover {
+        background: url("../../assets/images/sc-hover.png");
+      }
+      .ysc {
+        width: 49px;
+        height: 15px;
+        float: left;
+        margin-left: 10px;
+        position: relative;
+        top: 2px;
+        cursor: pointer;
+        background: url("../../assets/images/ysc.png");
       }
     }
     .quanBox {

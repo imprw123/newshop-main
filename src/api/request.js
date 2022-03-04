@@ -51,3 +51,51 @@ export function QueryOrderPayInfo(oid) {
 export function QueryGoodsById(goodsId) {
     return get(`${api.detail.QueryGoodsById}?goodsId=${goodsId}`);
 }
+
+
+//购物车接口
+export function QueryUserWebCartGoods(goodsId) {
+    return get(`${api.shopCar.QueryUserWebCartGoods}`);
+}
+//加入购物车
+export function AddWebCartGoods(goodsid, count, uid) {
+    return get(`${api.shopCar.AddWebCartGoods}?beGivenUserId=${uid}&goodsId=${goodsid}&count=${count}`)
+}
+//购物车接口
+
+
+//我的收藏
+export function QueryUserCollectedRPG(pi, ps) {
+    return get(`${api.myMap.QueryUserCollectedRPG}?pi=${pi}&ps=${ps}`)
+
+}
+//添加收藏
+export function AddCollectedRPG(cid) {
+    return get(`${api.myMap.AddCollectedRPG}?classId=${cid}`)
+}
+//删除收藏
+export function RemoveCollectedRPG(cid) {
+    return get(`${api.myMap.RemoveCollectedRPG}?classId=${cid}`)
+}
+
+//优惠券
+export function QueryUserCoupon() {
+    return get(`${api.yhq.QueryUserCoupon}`);
+}
+//已经使用优惠券
+export function QueryUserCouponOrder() {
+    return get(`${api.yhq.QueryUserCouponOrder}`)
+}
+
+//查询好友列表
+export function Queryfriends() {
+    return get(`${api.send.Queryfriends}`)
+}
+export function CheckAccount(name) {
+    return get(`${api.send.CheckAccount}?account=${name}`)
+}
+
+//支付
+export function PaymentRequest(dataEnCode) {
+    return get(`${api.pay.PaymentRequest}?data=${dataEnCode}`)
+}

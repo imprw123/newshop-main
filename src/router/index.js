@@ -7,6 +7,9 @@ import SHOPRPG from '../views/shopRpg.vue'
 import SHOPRPGDT from '../views/shopRpgDt.vue'
 import MYORDER from '../views/myOrder.vue'
 import DETAIL from '../views/detail.vue'
+import myMap from '../views/myMap.vue'
+import YHQ from '../views/yhq.vue'
+import searchMainView from '../views/searchMainView.vue'
 import user from "../store/user/user"
 import VueCookies from 'vue-cookies'
 const routes = [{
@@ -69,6 +72,30 @@ const routes = [{
         path: '/detail',
         name: 'detail',
         component: DETAIL,
+        meta: {
+            cheakIsLogin: true
+        }
+    },
+    {
+        path: '/searchMainView',
+        name: 'searchMainView',
+        component: searchMainView,
+        meta: {
+            cheakIsLogin: true
+        }
+    },
+    {
+        path: '/myMap',
+        name: 'myMap',
+        component: myMap,
+        meta: {
+            cheakIsLogin: true
+        }
+    },
+    {
+        path: '/yhq',
+        name: 'yhq',
+        component: YHQ,
         meta: {
             cheakIsLogin: true
         }

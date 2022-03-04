@@ -1,62 +1,68 @@
 <template>
   <div class="listModelContainer">
-    <HotRecomd
-      v-bind:lts="hotRecommedLts"
-      v-bind:flagid="4"
+    <div
+      style="min-height:200px"
       v-loading="loading2"
       element-loading-text="拼命加载中..."
       :element-loading-spinner="svg"
       element-loading-svg-view-box="-10, -10, 50, 50"
       element-loading-background="rgba(0, 0, 0, 0)"
-    />
-    <searchItem
-      v-bind:shopLtsMore="shopLtsMore"
-      v-bind:searchName="searchName"
-      v-bind:total="total"
-      @seachFlagPagerParent="_seachParent"
-      v-bind:sortName="sortName"
-      @_typeTagchangeBtnParent="_typeTagchangeBtn"
-      @changeCurrentPageParent="changeCurPage"
+    >
+      <HotRecomd v-bind:lts="hotRecommedLts" v-bind:flagid="4" />
+    </div>
+
+    <div
+      style="min-height: 600px"
       v-loading="loading"
       element-loading-text="拼命加载中..."
       :element-loading-spinner="svg"
       element-loading-svg-view-box="-10, -10, 50, 50"
       element-loading-background="rgba(0, 0, 0, 0)"
     >
-      <template v-slot:tabBox>
-        <div
-          class="tabBox"
-          v-bind:class="{
-            tabBoxCurrent01: pid == 1,
-            tabBoxCurrent02: pid == 5,
-          }"
-        >
-          <span
-            v-bind:class="{ current01: pid == 1 }"
-            @click="tabCustomShop('平台服务')"
-            >平台服务</span
+      <searchItem
+        v-bind:shopLtsMore="shopLtsMore"
+        v-bind:searchName="searchName"
+        v-bind:total="total"
+        @seachFlagPagerParent="_seachParent"
+        v-bind:sortName="sortName"
+        @_typeTagchangeBtnParent="_typeTagchangeBtn"
+        @changeCurrentPageParent="changeCurPage"
+      >
+        <template v-slot:tabBox>
+          <div
+            class="tabBox"
+            v-bind:class="{
+              tabBoxCurrent01: pid == 1,
+              tabBoxCurrent02: pid == 5,
+            }"
           >
-          <span
-            v-bind:class="{ current01: pid == 5 }"
-            @click="tabCustomShop('游戏道具')"
-            >游戏道具</span
-          >
-        </div>
-      </template>
-      <template v-slot:action-search>
-        <div class="in-tab-change-model">
-          <span
-            v-for="(item, index) in productTypeLts"
-            v-bind:key="index"
-            v-bind:class="{ current: item.Class_id == classid }"
-            @click="_changeCid(item.Class_id)"
-          >
-            <i>{{ item.Class_name }}</i>
-            <em>({{ item.Goods_count }})</em>
-          </span>
-        </div>
-      </template>
-    </searchItem>
+            <span
+              v-bind:class="{ current01: pid == 1 }"
+              @click="tabCustomShop('平台服务')"
+              >平台服务</span
+            >
+            <span
+              v-bind:class="{ current01: pid == 5 }"
+              @click="tabCustomShop('游戏道具')"
+              >游戏道具</span
+            >
+          </div>
+        </template>
+        <template v-slot:action-search>
+          <div class="in-tab-change-model">
+            <span
+              v-for="(item, index) in productTypeLts"
+              v-bind:key="index"
+              v-bind:class="{ current: item.Class_id == classid }"
+              @click="_changeCid(item.Class_id)"
+            >
+              <i>{{ item.Class_name }}</i>
+              <em>({{ item.Goods_count }})</em>
+            </span>
+          </div>
+        </template>
+      </searchItem>
+    </div>
   </div>
 </template>
 <script>

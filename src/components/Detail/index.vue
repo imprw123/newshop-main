@@ -119,17 +119,19 @@ export default {
   watch: {
     $route: {
       handler() {
-        this.goodsid = this.$route.query.goodsId;
+        this.goodsid = this.$route.query.cid;
         //console.log(this.$route.query.goodsId)
         if (
-          this.$route.query.goodsId == 18108 ||
-          this.$route.query.goodsId == 18107 ||
-          this.$route.query.goodsId == 18106 ||
-          this.$route.query.goodsId == 17674
+          this.$route.query.cid == 18108 ||
+          this.$route.query.cid == 18107 ||
+          this.$route.query.cid == 18106 ||
+          this.$route.query.cid == 17674
         ) {
           this.addFlag = false;
         }
-        this._QueryGoodsById(this.goodsid);
+        if (this.$route.query.cid) {
+          this._QueryGoodsById(this.goodsid);
+        }
         //this._QueryCouponByGoodsId();
         //深度监听，同时也可监听到param参数变化
       },
@@ -138,7 +140,9 @@ export default {
   },
   mounted() {
     this.goodsid = this.$route.query.cid;
-    this._QueryGoodsById(this.goodsid);
+    if (this.$route.query.cid) {
+      this._QueryGoodsById(this.goodsid);
+    }
   },
   methods: {
     _QueryGoodsById(goodsid) {
@@ -259,6 +263,14 @@ export default {
         color: #f74a4a;
         font-weight: normal;
         font-family: "微软雅黑";
+        em.discount {
+          width: 20px;
+          height: 14px;
+          background: url("../../assets/images/Z.png");
+          float: left;
+          margin-left: 5px;
+          margin-top: 10px;
+        }
       }
     }
     .UserCation {

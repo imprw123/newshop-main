@@ -34,6 +34,7 @@ const actions = {
 };
 
 export default createStore({
+    namespaced: true,
     state,
     mutations,
     actions

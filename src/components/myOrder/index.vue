@@ -7,6 +7,7 @@
       ><span style="width: 254px">发放对象</span>
     </div>
     <div
+      style="min-height: 600px; position: relative"
       class="orderContainer-bd"
       v-loading="loading"
       element-loading-text="拼命加载中..."
@@ -14,7 +15,14 @@
       element-loading-svg-view-box="-10, -10, 50, 50"
       element-loading-background="rgba(0, 0, 0, 0)"
     >
+      <img
+        class="noPain"
+        src="../../assets/images/noPain.png"
+        v-show="lts.length == 0"
+        alt=""
+      />
       <div
+        v-show="lts.length > 0"
         class="rowBox"
         v-for="(value, name, index) in groupLists"
         v-bind:key="index"
@@ -137,6 +145,7 @@ export default {
       tongbaoPay_price: 0,
       yaodouPay_price: 0,
       loading: true,
+      lts: [],
       svg: `
         <path class="path" d="
           M 30 15
@@ -175,9 +184,10 @@ export default {
     },
     _QueryUserOrder() {
       QueryUserOrder().then((res) => {
+        console.log(res);
+        this.lts = res.data;
         res.data.forEach((item) => {
-          //console.log(item);
-          //  debugger;
+         // debugger;
           if (!this.groupLists[item.Order_id]) {
             this.groupLists[item.Order_id] = [];
             this.groupLists[item.Order_id].push(item);
@@ -267,6 +277,7 @@ export default {
     }
   }
   .orderContainer-bd {
+    min-height: 600px;
     .rowBox {
       width: 1078px;
       overflow: hidden;
@@ -497,5 +508,11 @@ export default {
       }
     }
   }
+}
+img.noPain {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 </style>

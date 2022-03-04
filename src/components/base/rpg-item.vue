@@ -1,22 +1,6 @@
 <template>
-  <div class="rpgBox-item" v-if="this.$route.name == 'Index'">
-    <img
-      v-bind:src="`//img.5211game.com/5211/shop/RPG/${item.id}.jpg`"
-      alt=""
-      class="imgShow"
-    />
-    <div class="rpg-left">
-      <p>{{ item.Name }}</p>
-      <div class="typeName">
-        <span class="lf">{{ item.type }}</span>
-      </div>
-      <div class="enterShop">
-        <a href="#/rpg?cid=1592" class="">进入商店</a>
-      </div>
-    </div>
-  </div>
 
-  <div class="rpgBox-item" v-if="this.$route.name == 'ShopRpg'">
+  <div class="rpgBox-item">
     <img
       v-bind:src="`//img.5211game.com/5211/shop/RPG/${item.Class_id}.jpg`"
       alt=""

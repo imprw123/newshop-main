@@ -56,7 +56,7 @@
         </span>
       </div>
     </div>
-    <div class="listContent">
+    <div class="listContent" v-show="shopLtsMore.length > 0">
       <ul class="model01">
         <li
           v-for="(item, index) in shopLtsMore"
@@ -68,8 +68,17 @@
           <shopItem v-bind:item="item" />
         </li>
       </ul>
-      <el-pagination background layout="prev, pager, next" :total="total"  @current-change="handleCurrentChange" v-show="total>0">
+      <el-pagination
+        background
+        layout="prev, pager, next"
+        :total="total"
+        @current-change="handleCurrentChange"
+        v-show="total > 0"
+      >
       </el-pagination>
+    </div>
+    <div class="listContent" v-show="shopLtsMore.length == 0">
+      <img class="noPain" src="../../assets/images/noPain.png" alt="" />
     </div>
   </div>
 </template>
@@ -77,6 +86,7 @@
 <script>
 import shopItem from "./shop-item.vue";
 export default {
+  name: "search-item",
   props: {
     shopLtsMore: {
       type: Array,
@@ -90,10 +100,10 @@ export default {
       type: String,
       default: "weight",
     },
-    total:{
-      type:Number,
-      default:1
-    }
+    total: {
+      type: Number,
+      default: 1,
+    },
   },
   data() {
     return {
@@ -129,16 +139,28 @@ export default {
         this.$emit("_typeTagchangeBtnParent", this.sortname);
       }
     },
-    handleCurrentChange(val){
+    handleCurrentChange(val) {
       console.log(val);
-      this.$emit("changeCurrentPageParent",val)
-    }
+      this.$emit("changeCurrentPageParent", val);
+    },
   },
   mounted() {
-   // console.log(pager);
+    // console.log(pager);
   },
   components: {
     shopItem,
   },
 };
 </script>
+<style lang="less">
+.listContent {
+  min-height: 400px;
+  position: relative;
+}
+.listContent img.noPain{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+</style>

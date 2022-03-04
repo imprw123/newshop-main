@@ -48,7 +48,12 @@ let BaseFn = {
                 console.log('13213213213');
                 console.log(res);
                 this.InforObj = res.data;
-                this.productTypeLts = res.data.Class_GoodsInfo;
+                if (res.data.Class_GoodsInfo) {
+                    this.productTypeLts = res.data.Class_GoodsInfo;
+                } else {
+                    this.productTypeLts = [];
+                }
+
                 console.log(1234556)
                 console.log(this.InforObj)
             });

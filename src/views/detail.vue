@@ -30,5 +30,7 @@ export default {
     overflow: hidden;
     zoom: 1;
     margin: 0 auto;
+    position: relative;
+    z-index:2;
 }
 </style>

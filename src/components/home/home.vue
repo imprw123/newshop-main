@@ -2,7 +2,14 @@
   <div class="Home">
     <div class="main-banner">
       <div class="advertisement" id="mydiv"></div>
-      <div class="bannerShow_right">
+      <div
+        class="bannerShow_right"
+        v-loading="loading2"
+        element-loading-text="拼命加载中..."
+        :element-loading-spinner="svg"
+        element-loading-svg-view-box="-10, -10, 50, 50"
+        element-loading-background="rgba(0, 0, 0, 0)"
+      >
         <h1>
           <i class="icon01"></i>
           <span>新品推荐</span>
@@ -42,7 +49,14 @@
           </li>
         </ul>
       </div>
-      <div class="limit-buy-right">
+      <div
+        class="limit-buy-right"
+        v-loading="loading3"
+        element-loading-text="拼命加载中..."
+        :element-loading-spinner="svg"
+        element-loading-svg-view-box="-10, -10, 50, 50"
+        element-loading-background="rgba(0, 0, 0, 0)"
+      >
         <div class="tabchange">
           <span
             v-bind:class="{ current: currentFlag }"
@@ -82,7 +96,12 @@
 
     <!-- dota商品推荐 -->
     <div class="dota">
-      <h1><em>Dota推荐商品</em> <span class="more">进入Dota商店</span></h1>
+      <h1>
+        <em>Dota推荐商品</em>
+        <span class="more">
+          <router-link :to="{ path: '/dota' }">进入Dota商店</router-link></span
+        >
+      </h1>
       <ul class="model01">
         <li
           v-for="(item, index) in dotaLts"
@@ -97,16 +116,41 @@
     </div>
     <!-- dota商品推荐 -->
 
-    <!-- rpg底图推荐 -->
+    <!-- rpg推荐 -->
     <div class="rpg">
-      <h1><em>RPG推荐地图</em> <span class="more">进入RPG地图</span></h1>
+      <h1>
+        <em>RPG推荐地图</em>
+        <span class="more">
+          <router-link :to="{ path: '/shopRpg' }"
+            >进入RPG地图</router-link
+          ></span
+        >
+      </h1>
       <ul>
         <li
           v-for="(item, index) in rpgList"
           v-bind:key="index"
           v-bind:class="(index + 1) % 4 == 0 ? 'current' : ''"
         >
-          <rpgItem v-bind:item="item" />
+          <div class="rpgBox-item">
+            <img
+              v-bind:src="`//img.5211game.com/5211/shop/RPG/${item.id}.jpg`"
+              alt=""
+              class="imgShow"
+            />
+            <div class="rpg-left">
+              <p>{{ item.Name }}</p>
+              <div class="typeName">
+                <span class="lf">{{ item.type }}</span>
+              </div>
+              <div class="enterShop">
+                <router-link
+                  :to="{ path: '/shopRpgDt', query: { cid: item.id } }"
+                  >进入商店</router-link
+                >
+              </div>
+            </div>
+          </div>
         </li>
       </ul>
     </div>
@@ -114,7 +158,12 @@
 
     <!-- 平台推荐服务 -->
     <div class="dota">
-      <h1><em>平台推荐服务</em> <span class="more">进入平台服务</span></h1>
+      <h1>
+        <em>平台推荐服务</em>
+        <span class="more">
+          <router-link :to="{ path: '/pt' }">进入平台服务</router-link>
+        </span>
+      </h1>
       <ul class="model01">
         <li
           v-for="(item, index) in ptLts"
@@ -132,7 +181,6 @@
 </template>
 <script>
 import shopItem from "../base/shop-item.vue";
-import rpgItem from "../base/rpg-item.vue";
 import {
   limtBuy,
   hotRank,
@@ -152,6 +200,8 @@ export default {
       ptLts: [],
       newRecomment: "",
       loading: true,
+      loading2: true,
+      loading3: true,
       svg: `
         <path class="path" d="
           M 30 15
@@ -177,6 +227,7 @@ export default {
     //新品推荐
     _goodsByFlag() {
       goodsByFlag().then((res) => {
+        this.loading2 = false;
         if (res.code == 0) {
           this.newRecomment = res.data.list[0];
         } else {
@@ -232,6 +283,7 @@ export default {
       hotRank().then((res) => {
         //console.log(res);
         this.rankList = res.data.list;
+        this.loading3 = false;
       });
     },
     //dota商品推荐
@@ -261,7 +313,6 @@ export default {
   },
   components: {
     shopItem,
-    rpgItem,
   },
 };
 </script>
@@ -280,7 +331,7 @@ export default {
       height: 360px;
       float: left;
       background-color: #000;
-      box-shadow:2.86px 6.67px 16.29px rgba(0,0,0,0.7);
+      box-shadow: 2.86px 6.67px 16.29px rgba(0, 0, 0, 0.7);
     }
     .bannerShow_right {
       width: 278px;
@@ -288,7 +339,7 @@ export default {
       background-color: #fff;
       float: right;
       border: 1px solid #dbdbdb;
-      box-shadow:2.86px 6.67px 16.29px rgba(0,0,0,0.7);
+      box-shadow: 2.86px 6.67px 16.29px rgba(0, 0, 0, 0.7);
       h1 {
         width: 258px;
         height: 34px;
@@ -369,6 +420,11 @@ export default {
           font-size: 14px;
           margin-top: 18px;
         }
+        .qg:hover {
+          background-color: #f84a11;
+          border: 1px solid #ca3705;
+          transition: 0.2s;
+        }
       }
     }
   }
@@ -376,7 +432,7 @@ export default {
     width: 1080px;
     height: 320px;
     margin-top: 20px;
-    box-shadow:2.86px 6.67px 16.29px rgba(0,0,0,0.7);
+    box-shadow: 2.86px 6.67px 16.29px rgba(0, 0, 0, 0.7);
     .limit-buy-left {
       width: 768px;
       height: 304px;
@@ -443,11 +499,11 @@ export default {
           img {
             width: 50px;
             height: 50px;
-            border-radius:4px;
+            border-radius: 4px;
           }
-          img:hover{
+          img:hover {
             transform: scale(1.05);
-            transition:1s ease;
+            transition: 1s ease;
           }
         }
         .infor-right {
@@ -495,13 +551,21 @@ export default {
         line-height: 28px;
         background: url("../../assets/images/more.png");
         float: right;
-        font-size: 14px;
-        color: #fff;
-        font-family: "微软雅黑";
         padding-left: 30px;
-      }
-      .more:hover {
-        cursor: pointer;
+        a {
+          width: 100%;
+          height: 100%;
+          display: block;
+          font-size: 14px;
+          color: #fff;
+          font-family: "微软雅黑";
+        }
+        a:hover {
+          cursor: pointer;
+          color: yellow;
+          transform: scale(1.02);
+          transition: 0.2s ease;
+        }
       }
     }
     ul.model01 li {
@@ -512,14 +576,14 @@ export default {
       float: left;
       margin-right: 10px;
     }
-    ul.model01 li:hover {
-      -webkit-transform: translateY(-5px);
-      -moz-transform: translateY(-5px);
-      -ms-transform: translateY(-5px);
-      -o-transform: translateY(-5px);
-      transform: translateY(-5px);
-      transition: 0.5s ease;
-    }
+    // ul.model01 li:hover {
+    //   -webkit-transform: translateY(-5px);
+    //   -moz-transform: translateY(-5px);
+    //   -ms-transform: translateY(-5px);
+    //   -o-transform: translateY(-5px);
+    //   transform: translateY(-5px);
+    //   transition: 0.5s ease;
+    // }
   }
   .rpg {
     width: 1080px;
@@ -556,9 +620,20 @@ export default {
         color: #fff;
         font-family: "微软雅黑";
         padding-left: 30px;
-      }
-      .more:hover {
-        cursor: pointer;
+        a {
+          width: 100%;
+          height: 100%;
+          display: block;
+          font-size: 14px;
+          color: #fff;
+          font-family: "微软雅黑";
+        }
+        a:hover {
+          cursor: pointer;
+          color: yellow;
+          transform: scale(1.02);
+          transition: 0.2s ease;
+        }
       }
     }
   }

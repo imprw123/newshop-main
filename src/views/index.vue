@@ -20,5 +20,7 @@
     .container{
         width:1080px;
         margin:0 auto;
+        position: relative;
+        z-index: 2;
     }
 </style>

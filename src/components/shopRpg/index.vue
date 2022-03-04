@@ -24,7 +24,14 @@
       <!-- <div class="rpgBtn" >搜索商店</div> -->
     </div>
   </div>
-  <div class="rpgMapList">
+  <div
+    class="rpgMapList"
+    v-loading="loading"
+    element-loading-text="拼命加载中..."
+    :element-loading-spinner="svg"
+    element-loading-svg-view-box="-10, -10, 50, 50"
+    element-loading-background="rgba(0, 0, 0, 0)"
+  >
     <div class="rpgMapListHd">
       <span
         v-for="(item, index) in typeListName"
@@ -34,14 +41,7 @@
         >{{ item.name }}</span
       >
     </div>
-    <div
-      class="rpgMapListCenter"
-      v-loading="loading"
-      element-loading-text="拼命加载中..."
-      :element-loading-spinner="svg"
-      element-loading-svg-view-box="-10, -10, 50, 50"
-      element-loading-background="rgba(0, 0, 0, 0)"
-    >
+    <div class="rpgMapListCenter">
       <span>筛选</span>
       <em
         v-for="(item, index) in stirngFirstWords"
@@ -51,7 +51,7 @@
         >{{ item }}</em
       >
     </div>
-    <div class="mapListRpg">
+    <div class="mapListRpg" v-show="itemlts.length > 0">
       <ul>
         <li
           v-for="(item, index) in itemlts"
@@ -64,6 +64,7 @@
         </li>
       </ul>
     </div>
+   
     <el-pagination
       background
       layout="prev, pager, next"
@@ -72,6 +73,10 @@
       v-if="itemlts.length > 0"
     >
     </el-pagination>
+
+     <div class="mapListRpg" v-show="itemlts.length == 0">
+      <img class="noPain" src="../../assets/images/noPain.png" alt="" />
+    </div>
   </div>
 </template>
 <script>
@@ -178,7 +183,7 @@ export default {
         console.log(res);
         this.itemlts = res.data.list;
         this.total = res.data.count;
-        this.loading=false;
+        this.loading = false;
       });
     },
     firstWordSearch(word) {
@@ -333,6 +338,8 @@ export default {
   width: 100%;
   overflow: hidden;
   zoom: 1;
+  position: relative;
+  min-height:300px;
   ul li {
     width: 253px;
     height: 93px;
@@ -341,6 +348,12 @@ export default {
     margin-right: 12px;
     margin-bottom: 12px;
     padding: 15px 0px 0px 8px;
+  }
+  .noPain {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
   }
 }
 </style>

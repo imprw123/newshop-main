@@ -1,36 +1,42 @@
 <template>
-  <div class="rpgMap">
+  <div class="searchMain">
     <Header />
     <BreadCurmb v-bind:breadCurmbName="breadCurmbName" />
-    <ShopView/>
+    <searchView/>
     <SiderBar />
   </div>
 </template>
+
 <script>
 import mixinBase from "../mixin/mixin";
-import ShopView from "../components/shopRpg/index.vue"
+import searchView from "../components/search/index.vue";
 export default {
+  name: "searchMainView",
   mixins: [mixinBase],
   data() {
     return {
       breadCurmbName: "",
+      classid: 0,
+      pid: 0,
     };
   },
   mounted() {
     this.breadCurmbName = this.$route.name;
   },
-  components:{
-      ShopView
-  }
+  components: {
+    searchView,
+  },
 };
 </script>
 <style lang="less">
-.rpgMap {
+.searchMain {
   width: 1080px;
-  overflow: hidden;
-  zoom: 1;
   margin: 0 auto;
    position: relative;
   z-index:2;
+}
+.main {
+  width: 100%;
+  min-height: 800px;
 }
 </style>

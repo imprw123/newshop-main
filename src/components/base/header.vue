@@ -42,12 +42,12 @@ export default {
   },
   mounted() {
     this.currentName = this.$route.name;
-    console.log(this.$route);
-    window.addEventListener("scroll", this.handleScroll);
+
+     window.addEventListener("scroll", this.handleScroll);
   },
   methods: {
     handleScroll() {
-      debugger;
+      // debugger;
       var scrollTop =
         window.pageYOffset ||
         document.documentElement.scrollTop ||
@@ -71,17 +71,17 @@ export default {
   position: fixed;
   top: 0px;
   z-index: 999;
- -webkit-animation: shake-data 0.5s linear ;
- animation: shake-data 0.5s linear ;
+  -webkit-animation: shake-data 0.5s linear;
+  animation: shake-data 0.5s linear;
 }
-@keyframes shake-data{
-  0%{
-    transform:scale(1);
+@keyframes shake-data {
+  0% {
+    transform: scale(1);
   }
-  50%{
+  50% {
     transform: scale(1.02);
   }
-  100%{
+  100% {
     transform: scale(1);
   }
 }

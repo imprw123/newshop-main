@@ -15,9 +15,28 @@
       </div>
       <div class="detail-type">{{ item.Tag }}</div>
       <div class="action">
-        <span class="shopcar" v-if="item.Class_id != 583">+ 购物车</span>
-        <span class="send" v-if="item.Class_id != 583">赠送</span>
-        <span class="ljgm" v-bind:class="{ ljgmCurrent: item.Class_id == 583 }"
+        <span
+          class="shopcar"
+          v-if="item.Class_id != 583"
+          @click="_AddWebCartGoods(item.Goods_id, 1, 0)"
+          >+ 购物车</span
+        >
+        <span
+          class="send"
+          v-if="item.Class_id != 583"
+          @click="
+            _sendParentCartGods(
+              item.Goods_id,
+              item.Goods_imgPath,
+              item.Goods_disName
+            )
+          "
+          >赠送</span
+        >
+        <span
+          class="ljgm"
+          v-bind:class="{ ljgmCurrent: item.Class_id == 583 }"
+          @click="gmFn(item.Goods_id, 1, 0)"
           >立即购买</span
         >
       </div>
@@ -27,8 +46,16 @@
       </div>
     </div>
   </div>
+  <SendDiv ref="child" />
+  <payView ref="payChildren" />
 </template>
 <script>
+import { AddWebCartGoods, QueryUserWebCartGoods } from "../../api/request";
+import SendDiv from "./send.vue";
+import payView from "./pay.vue";
+import { mapActions } from "vuex";
+import { ElMessage } from "element-plus";
+import { ElLoading } from "element-plus";
 export default {
   props: {
     item: {
@@ -37,10 +64,50 @@ export default {
     },
   },
   data() {
-    return {};
+    return {
+      totalNumber: 0,
+      totalMoney: 0,
+    };
   },
   mounted() {
     console.log(this.item);
+  },
+  methods: {
+    ...mapActions("shopInfo", {
+      shop_Car: "shop_Car",
+    }),
+    //加入购物车接口
+    _AddWebCartGoods(goodsid, count, uid) {
+      const loading = ElLoading.service({
+        lock: true,
+        text: "Loading",
+        background: "rgba(0, 0, 0, 0.5)",
+      });
+      AddWebCartGoods(goodsid, count, uid).then((res) => {
+        if (res.code == 0) {
+          loading.close();
+          ElMessage({
+            message: "加入购物车成功!",
+            type: "success",
+          });
+          this.shop_Car();
+        } else {
+          loading.close();
+          ElMessage.error(`加入购物车失败,${res.msg}!`);
+        }
+      });
+    },
+    gmFn(val, c, u) {
+      this.$refs.payChildren.payChildren(val, c, u);
+    },
+    //赠送好友
+    _sendParentCartGods(gid, img, name) {
+      this.$refs.child.childrenPram(gid, img, name);
+    },
+  },
+  components: {
+    SendDiv,
+    payView,
   },
 };
 </script>

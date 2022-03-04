@@ -1,7 +1,7 @@
 <template>
   <div
     class="siderBox"
-    v-bind:class="{ siderBoxCurrent: Flag01 || Flag02 || Flag03 || Flag04 }"
+    v-bind:class="{ siderBoxCurrent: Flag01 ||  Flag02 || Flag03 || Flag04 }"
   >
     <div class="siderBar">
       <div class="silderBtn">
@@ -16,7 +16,7 @@
             v-on:click="openFixed('购物车')"
             v-bind:class="{ silder02Current: Flag01 }"
           >
-            <i class="ci-count">0</i>
+            <i class="ci-count">{{totalNumberFn}}</i>
           </li>
           <li
             class="silder03"
@@ -25,7 +25,7 @@
           ></li>
           <li
             class="silder04"
-            v-on:click="openFixed('搜藏')"
+            v-on:click="openFixed('收藏')"
             v-bind:class="{ silder04Current: Flag03 }"
           ></li>
           <li
@@ -36,19 +36,19 @@
         </ul>
       </div>
       <div class="siderHd">
-        <span>购物车</span>
+        <span>{{titleName}}</span>
       </div>
       <div class="sider-xian"></div>
      <component v-bind:is="showBox"></component>
-
-    
     </div>
   </div>
 </template>
 <script>
-import siderCar from './siderBar-path/sider-Car.vue'
-import searchAll from './siderBar-path/search-All.vue'
-import collected from './siderBar-path/collected.vue'
+import SiderCar from './siderBar-path/sider-Car.vue'
+import SearchAll from './siderBar-path/search-All.vue'
+import Collected from './siderBar-path/collected.vue'
+import YhqPath from './siderBar-path/yhq-path.vue'
+import {  mapGetters } from "vuex";
 export default {
   data() {
     return {
@@ -56,8 +56,14 @@ export default {
       Flag02: false,
       Flag03: false,
       Flag04: false,
-      showBox:"siderCar"
+      showBox:"SiderCar",
+      titleName:'购物车'
     };
+  },
+   computed: {
+    ...mapGetters("shopInfo",{
+      totalNumberFn:"totalNumberFn"
+    })
   },
   methods: {
     closeFixed() {
@@ -72,28 +78,37 @@ export default {
         this.Flag02 = false;
         this.Flag03 = false;
         this.Flag04 = false;
+        this.showBox="SiderCar"
+        this.titleName="购物车"
       } else if (val == "搜索") {
         this.Flag01 = false;
         this.Flag02 = true;
         this.Flag03 = false;
         this.Flag04 = false;
-      } else if (val == "搜藏") {
+        this.showBox="SearchAll"
+        this.titleName="搜索"
+      } else if (val == "收藏") {
         this.Flag01 = false;
         this.Flag02 = false;
         this.Flag03 = true;
         this.Flag04 = false;
+         this.titleName="收藏"
+       this.showBox="Collected"
       } else if (val == "优惠券") {
         this.Flag01 = false;
         this.Flag02 = false;
         this.Flag03 = false;
         this.Flag04 = true;
+        this.showBox="YhqPath"
+        this.titleName="优惠券"
       }
     },
   },
   components:{
-    siderCar,
-    searchAll,
-    collected
+    SiderCar,
+    SearchAll,
+    Collected,
+    YhqPath
   }
 };
 </script>

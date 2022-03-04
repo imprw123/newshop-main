@@ -1,6 +1,10 @@
 <template>
-  <InfoView v-bind:InforObj2="InforObj" v-if="InforObj" />
-  <HotRecomd v-bind:lts="hotRecommedLts" v-bind:flagid="512" v-if="hotRecommedLts.length>0"/>
+  <InfoView v-bind:InforObj2="InforObj" v-if="InforObj" v-on:initInfo="initInfoFn" />
+  <HotRecomd
+    v-bind:lts="hotRecommedLts"
+    v-bind:flagid="512"
+    v-if="hotRecommedLts.length > 0"
+  />
   <searchItem
     v-bind:shopLtsMore="shopLtsMore"
     v-bind:searchName="searchName"
@@ -9,6 +13,11 @@
     v-bind:sortName="sortName"
     @_typeTagchangeBtnParent="_typeTagchangeBtn"
     @changeCurrentPageParent="changeCurPage"
+    v-loading="loading"
+    element-loading-text="拼命加载中..."
+    :element-loading-spinner="svg"
+    element-loading-svg-view-box="-10, -10, 50, 50"
+    element-loading-background="rgba(0, 0, 0, 0)"
   >
     <template v-slot:tabBox>
       <div
@@ -43,13 +52,14 @@ export default {
       productTypeLts: [],
       classid: this.$route.query.cid,
       flagId: 0,
-      pid:this.$route.query.cid
+      pid: this.$route.query.cid,
+     
     };
   },
   mounted() {
     this._dotaRecomment(this.classid, 512);
     this._seachFlagPager();
-     this._ClassInfoByCid(); 
+    this._ClassInfoByCid();
   },
   methods: {
     tabCustomShop(val) {
@@ -63,6 +73,9 @@ export default {
         this._seachFlagPager();
       }
     },
+    initInfoFn(){
+      this._ClassInfoByCid();
+    }
   },
   components: {
     HotRecomd,
@@ -96,7 +109,7 @@ export default {
 }
 .tab-change-model {
   width: 1080px;
-  min-height: 120px;
+  min-height: 300px;
   font-size: 12px;
   color: #fff;
   margin-top: 25px;
