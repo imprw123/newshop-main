@@ -1,19 +1,21 @@
 <template>
-  <div class="payModel" v-show="payFlag">
-    <div class="pay">
-      <i class="close" @click="closePay"></i>
-      <iframe
-        class="iframeBox"
-        width="604"
-        height="420"
-        scrolling="no"
-        frameborder="0"
-        allowtransparency="true"
-        v-bind:src="url"
-        @load="pageShow"
-      ></iframe>
+  <transition name="fade">
+    <div class="payModel" v-show="payFlag">
+      <div class="pay">
+        <i class="close" @click="closePay"></i>
+        <iframe
+          class="iframeBox"
+          width="604"
+          height="420"
+          scrolling="no"
+          frameborder="0"
+          allowtransparency="true"
+          v-bind:src="url"
+          @load="pageShow"
+        ></iframe>
+      </div>
     </div>
-  </div>
+  </transition>
 </template>
 
 

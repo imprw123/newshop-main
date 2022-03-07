@@ -50,7 +50,7 @@
   <payView ref="payChildren" />
 </template>
 <script>
-import { AddWebCartGoods, QueryUserWebCartGoods } from "../../api/request";
+import { AddWebCartGoods } from "../../api/request";
 import SendDiv from "./send.vue";
 import payView from "./pay.vue";
 import { mapActions } from "vuex";

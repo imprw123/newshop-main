@@ -106,8 +106,8 @@
       </ul>
     </div>
     <div class="shopCarBt">
-      <div class="gmNoBtn" v-show="!checkedAll">立即购买</div>
-      <div class="gmBtn" v-show="checkedAll" @click="gmFn">立即购买</div>
+      <div class="gmNoBtn" v-show="!isPay">立即购买</div>
+      <div class="gmBtn" v-show="isPay" @click="gmFn">立即购买</div>
       <p>
         总价:<b>{{ `￥${totalMoneyFn}` }}</b>
       </p>
@@ -116,7 +116,7 @@
       </p>
     </div>
   </div>
-   <payView ref="payChildren" />
+  <payView ref="payChildren" />
 </template>
 <script>
 import { mapGetters, mapActions, mapMutations } from "vuex";
@@ -126,7 +126,7 @@ import {
   RemoveWebCartGoods,
   CheckAccount,
 } from "../../api/request";
-import payView from "../../components/base/pay.vue"
+import payView from "../../components/base/pay.vue";
 import { ElMessage } from "element-plus";
 import { ElLoading } from "element-plus";
 export default {
@@ -136,6 +136,7 @@ export default {
       checked: false,
       total_num: 0,
       total_money: 0,
+      isPay: true,
     };
   },
   computed: {
@@ -256,8 +257,10 @@ export default {
     //全选和反选
     changeAllBtn() {
       if (this.checkedAll == true) {
+        this.isPay = true;
         this.shop_Car();
       } else if (this.checkedAll == false) {
+        this.isPay = false;
         this.shopCarBoxFn.map((item) => {
           item.isChecked = false;
         });
@@ -283,12 +286,14 @@ export default {
         ltsChecked.push(item.isChecked);
       });
       if (ltsChecked.includes(true)) {
+        this.isPay = true;
         this.total_money = this.total_money.toFixed(2);
         this.update_num_money({
           totalNumber: this.total_num,
           totalMoney: this.total_money,
         });
       } else {
+        this.isPay = false;
         this.update_num_money({
           totalNumber: 0,
           totalMoney: 0,
@@ -302,26 +307,25 @@ export default {
       }
     },
     //立即购买
-    gmFn(){
-       const _data=[];
-        this.shopCarBoxFn.map(item=>{
-            if(item.isChecked){
-                var _obj=new Object();
-                _obj.I=item.Goods_id;
-                _obj.C=item.Goods_amount;
-                _obj.U=item.BeGiven_userid;
-            }
-            _data.push(_obj);
-        })
-         const jsonStr = JSON.stringify(_data);
-         console.log(_data);
-         this.$refs.payChildren.payChildrenLists(jsonStr);
-    }
-
+    gmFn() {
+      const _data = [];
+      this.shopCarBoxFn.map((item) => {
+        if (item.isChecked) {
+          var _obj = new Object();
+          _obj.I = item.Goods_id;
+          _obj.C = item.Goods_amount;
+          _obj.U = item.BeGiven_userid;
+        }
+        _data.push(_obj);
+      });
+      const jsonStr = JSON.stringify(_data);
+      console.log(_data);
+      this.$refs.payChildren.payChildrenLists(jsonStr);
+    },
   },
-  components:{
-      payView
-  }
+  components: {
+    payView,
+  },
 };
 </script>
 

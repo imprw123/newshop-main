@@ -55,7 +55,12 @@
           <i>数 量</i>
           <span class="changeNum">
             <em class="leftBtn" @click="leftBtn">-</em>
-            <input type="text" id="count" v-model="count" />
+            <input
+              type="text"
+              id="count"
+              v-model="count"
+              @change="changeCount"
+            />
             <em class="rightBtn" @click="rightBtn">+</em>
           </span>
         </p>
@@ -70,7 +75,7 @@
             href="javascript:;"
             class="sure_Gm"
             v-if="detailObj.Class_id != 583"
-            @click="AddWebCartGoods()"
+            @click="_AddWebCartGoods(detailObj.Goods_id, count, 0)"
             >加入购物车</a
           >
           <a
@@ -78,7 +83,8 @@
             href="javascript:;"
             class="sure_Zs"
             @click="
-              sendParentCartGods(
+              _sendParentCartGods(
+                detailObj.Goods_id,
                 detailObj.Goods_imgPath,
                 detailObj.Goods_disName
               )
@@ -93,15 +99,22 @@
     <div class="detailInforMation-name">详情介绍</div>
     <div v-html="detailObj.Goods_details"></div>
   </div>
+  <payView ref="payChildren" />
+   <SendDiv ref="child" />
 </template>
 <script>
-import { QueryGoodsById } from "../../api/request";
+import { QueryGoodsById, AddWebCartGoods } from "../../api/request";
+import { ElMessage } from "element-plus";
+import { ElLoading } from "element-plus";
+import payView from "../base/pay.vue";
+import SendDiv from "../base/send.vue"
+import { mapActions } from "vuex";
 export default {
   data() {
     return {
       detailObj: "",
       goodsid: 0,
-      count: 0,
+      count: 1,
       addFlag: true,
       loading: true,
       svg: `
@@ -145,15 +158,64 @@ export default {
     }
   },
   methods: {
+    ...mapActions("shopInfo", {
+      shop_Car: "shop_Car",
+    }),
+    changeCount() {
+      if (this.count == 0) {
+        this.count = 1;
+      }
+    },
+      //赠送好友
+    _sendParentCartGods(gid, img, name) {
+      this.$refs.child.childrenPram(gid, img, name);
+    },
+    //加入购物车接口
+    _AddWebCartGoods(goodsid, count, uid) {
+      const loading = ElLoading.service({
+        lock: true,
+        text: "Loading",
+        background: "rgba(0, 0, 0, 0.5)",
+      });
+      AddWebCartGoods(goodsid, count, uid).then((res) => {
+        if (res.code == 0) {
+          loading.close();
+          ElMessage({
+            message: "加入购物车成功!",
+            type: "success",
+          });
+          this.shop_Car();
+        } else {
+          loading.close();
+          ElMessage.error(`加入购物车失败,${res.msg}!`);
+        }
+      });
+    },
+    gmFn(val, c, u) {
+      this.$refs.payChildren.payChildren(val, c, u);
+    },
     _QueryGoodsById(goodsid) {
       QueryGoodsById(goodsid).then((res) => {
-      //  console.log(res);
+        //  console.log(res);
         if (res.code == 0) {
           this.detailObj = res.data;
           this.loading = false;
         }
       });
     },
+    rightBtn() {
+      this.count++;
+    },
+    leftBtn() {
+      this.count--;
+      if (this.count <= 0) {
+        this.count = 1;
+      }
+    },
+  },
+  components: {
+    payView,
+    SendDiv
   },
 };
 </script>

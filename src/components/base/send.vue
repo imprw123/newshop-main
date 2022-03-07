@@ -169,6 +169,7 @@
           </div>
         </div>
       </div>
+      <payView ref="payChildren" />
     </div>
   </transition>
 </template>
@@ -179,6 +180,7 @@ import { Queryfriends, CheckAccount, AddWebCartGoods } from "../../api/request";
 import { mapActions } from "vuex";
 import { ElMessage } from "element-plus";
 import { ElLoading } from "element-plus";
+import payView from "./pay.vue";
 export default {
   name: "send",
   data() {
@@ -244,7 +246,7 @@ export default {
     sendBuy() {
       CheckAccount(this.valName).then((res) => {
         if (res.code == 0) {
-          this.$emit("parentPayFor", this.goodsid, 1, res.data.UserId);
+           this.$refs.payChildren.payChildren(this.goodsid, 1, res.data.UserId);
         } else if (res.code < 0) {
           this.msg2 = res.msg;
         }
@@ -264,7 +266,7 @@ export default {
     sendBuy2() {
       CheckAccount(this.valName2).then((res) => {
         if (res.code == 0) {
-          this.$emit("parentPayFor", this.goodsid, 1, res.data.UserId);
+          this.$refs.payChildren.payChildren(this.goodsid, 1, res.data.UserId);
         } else if (res.code < 0) {
           this.msg = res.msg;
         }
@@ -302,6 +304,9 @@ export default {
         }
       });
     },
+  },
+  components: {
+    payView,
   },
 };
 </script>

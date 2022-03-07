@@ -28,7 +28,7 @@
             </b>
             <i>{{ newRecomment.Unit }}</i>
           </p>
-          <a href="javascript:;" class="qg">立即抢购</a>
+          <a href="javascript:;" class="qg" @click="gmFn(newRecomment.Goods_id, 1, 0)">立即抢购</a>
         </div>
       </div>
     </div>
@@ -177,10 +177,12 @@
       </ul>
     </div>
     <!-- 平台推荐服务 -->
+    <payView ref="payChildren"/>
   </div>
 </template>
 <script>
 import shopItem from "../base/shop-item.vue";
+import payView from "../base/pay.vue"
 import {
   limtBuy,
   hotRank,
@@ -234,6 +236,10 @@ export default {
           this.newRecomment = "";
         }
       });
+    },
+    //立即抢购
+     gmFn(val, c, u) {
+      this.$refs.payChildren.payChildren(val, c, u);
     },
     //限时抢购
     _limtBuy() {
@@ -313,6 +319,7 @@ export default {
   },
   components: {
     shopItem,
+    payView
   },
 };
 </script>
