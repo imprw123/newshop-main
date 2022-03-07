@@ -11,7 +11,7 @@
         </p>
       </div>
       <div class="totalBox-right">
-        <a href="#/shopCar" class="">去购物车结算</a>
+        <router-link :to="{path:'/shopCar'}">去购物车结算</router-link>
       </div>
     </div>
     <div class="silder-shop">

@@ -4,6 +4,7 @@
     <img
       v-bind:src="`//img.5211game.com/5211/shop/RPG/${item.Class_id}.jpg`"
       alt=""
+      :onerror="err"
       class="imgShow"
     />
     <div class="rpg-left">
@@ -21,8 +22,13 @@
 </template>
 <script>
 export default {
+  data(){
+    return{
+     
+    }
+  },
   mounted() {
-    console.log(this.$route.name);
+    //console.log(this.$route.name);
   },
   props: {
     item: {
@@ -31,6 +37,10 @@ export default {
     },
   },
   methods: {
+    err(e){
+   
+      e.target.src='//img.5211game.com/5211/shop/RPG/85.jpg';
+    },
     typeName(val) {
       if (val == 1) {
         return "防守类";

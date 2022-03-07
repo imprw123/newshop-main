@@ -69,6 +69,7 @@
       background
       layout="prev, pager, next"
       :total="total"
+      :page-size="12"
       @current-change="handleCurrentChange"
       v-if="itemlts.length > 0"
     >
@@ -172,7 +173,7 @@ export default {
       document.getElementById("" + name + "").appendChild(script);
     },
     _QueryRPGBySearchPager() {
-      console.log(this.valName);
+    //  console.log(this.valName);
       QueryRPGBySearchPager(
         this.category,
         this.firstword,
@@ -180,7 +181,8 @@ export default {
         this.pi,
         this.ps
       ).then((res) => {
-        console.log(res);
+        // console.log(777);
+      //  console.log(res);
         this.itemlts = res.data.list;
         this.total = res.data.count;
         this.loading = false;

@@ -127,7 +127,7 @@ export default {
       var date = new Date(
         parseInt(time1.replace("/Date(", "").replace(")/", ""), 10)
       );
-      console.log(date.getTime());
+    //  console.log(date.getTime());
       var ms = date.getTime() + time2 * 1000;
       return this.getDateStr(ms);
     },
@@ -155,7 +155,7 @@ export default {
     _QueryUserCoupon() {
       QueryUserCoupon().then((res) => {
         this.yhqlist = res.data.list.filter((current) => {
-          console.log(current);
+         // console.log(current);
           if (current.Cfg_Use_type == 1) {
             if (
               this.comptime(

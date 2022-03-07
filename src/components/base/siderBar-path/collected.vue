@@ -33,7 +33,7 @@ export default {
   methods: {
     _QueryUserCollectedRPG() {
       QueryUserCollectedRPG(1, 10).then((res) => {
-        console.log(res);
+        //console.log(res);
         this.rpgList = res.data.list;
         this.count = res.data.count;
       });

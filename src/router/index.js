@@ -9,6 +9,7 @@ import MYORDER from '../views/myOrder.vue'
 import DETAIL from '../views/detail.vue'
 import myMap from '../views/myMap.vue'
 import YHQ from '../views/yhq.vue'
+import SHOPCAR from '../views/shopCar.vue'
 import searchMainView from '../views/searchMainView.vue'
 import user from "../store/user/user"
 import VueCookies from 'vue-cookies'
@@ -99,6 +100,14 @@ const routes = [{
         meta: {
             cheakIsLogin: true
         }
+    },
+    {
+        path: '/shopCar',
+        name: 'shopCar',
+        component: SHOPCAR,
+        meta: {
+            cheakIsLogin: true
+        }
     }
 
 ]
@@ -110,6 +119,7 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
     if (to.meta.cheakIsLogin) {
         user.dispatch('getNowUser').then(res => {
+            // debugger;
             if (res.code == 0) {
                 next();
             } else {

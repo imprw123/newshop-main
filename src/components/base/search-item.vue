@@ -71,6 +71,7 @@
       <el-pagination
         background
         layout="prev, pager, next"
+        :page-size="10"
         :total="total"
         @current-change="handleCurrentChange"
         v-show="total > 0"
@@ -140,7 +141,7 @@ export default {
       }
     },
     handleCurrentChange(val) {
-      console.log(val);
+     // console.log(val);
       this.$emit("changeCurrentPageParent", val);
     },
   },

@@ -61,7 +61,7 @@ export default {
   methods: {
     _QueryUserCollectedRPG() {
       return QueryUserCollectedRPG(this.pi, this.ps).then((res) => {
-        console.log(res);
+       // console.log(res);
         this.loading = false;
         this.itemlts = res.data.list;
         this.total = res.data.count;

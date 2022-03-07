@@ -61,6 +61,14 @@ export function QueryUserWebCartGoods(goodsId) {
 export function AddWebCartGoods(goodsid, count, uid) {
     return get(`${api.shopCar.AddWebCartGoods}?beGivenUserId=${uid}&goodsId=${goodsid}&count=${count}`)
 }
+// 减少购物车数量
+export function DeductWebCartGoods(goodsid, uid) {
+    return get(`${api.shopCar.DeductWebCartGoods}?beGivenUserId=${uid}&goodsId=${goodsid}`)
+}
+//删除购物车商品
+export function RemoveWebCartGoods(goodsid, uid) {
+    return get(`${api.shopCar.RemoveWebCartGoods}?beGivenUserId=${uid}&goodsId=${goodsid}`)
+}
 //购物车接口
 
 

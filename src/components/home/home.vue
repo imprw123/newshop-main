@@ -289,7 +289,7 @@ export default {
     //dota商品推荐
     _dotaRecomment() {
       dotaRecomment(3, 4).then((res) => {
-        console.log(res);
+      //  console.log(res);
         this.dotaLts = res.data.list;
       });
     },
@@ -306,7 +306,7 @@ export default {
     //平台服务商品推荐
     _ptRecoment() {
       ptRecoment().then((res) => {
-        console.log(res);
+       // console.log(res);
         this.ptLts = res.data.list;
       });
     },

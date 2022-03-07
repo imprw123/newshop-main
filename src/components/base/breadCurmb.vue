@@ -1,14 +1,25 @@
 <template>
   <div class="nav-tab">
-    <span> 首页 </span>
-    <em>/</em>
-    <span>{{breadCurmbName}}</span>
+    <div v-if="breadCurmbName != 'shopRpgDt'">
+      <span> <router-link :to="{ path: '/' }">首页</router-link></span>
+      <em>/</em>
+      <span>{{ breadCurmbName }}</span>
+    </div>
+    <div v-if="breadCurmbName == 'shopRpgDt'">
+      <span> <router-link :to="{ path: '/' }">首页</router-link></span>
+      <em>/</em>
+      <span>
+        <router-link :to="{ path: '/ShopRpg' }">RPG商店</router-link></span
+      >
+      <em>/</em>
+      <span>{{ breadCurmbName }}</span>
+    </div>
   </div>
 </template>
 <script>
-export default{
-  props:['breadCurmbName']
-}
+export default {
+  props: ["breadCurmbName"],
+};
 </script>
 
 <style lang="less">
@@ -28,6 +39,14 @@ export default{
     margin-bottom: 12px;
     color: #ffffff;
     font-size: 12px;
+    a {
+      font-family: "微软雅黑";
+      color: #ffffff;
+      font-size: 12px;
+    }
+    a:hover {
+      color: #f74a4a;
+    }
   }
   em {
     margin: 0 4px;

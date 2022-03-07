@@ -25,6 +25,10 @@ const mutations = {
         state.totalNumber = totalNumber;
         state.totalMoney = totalMoney;
         state.shopCarBox = shopCarBox;
+    },
+    update_num_money(state, { totalNumber, totalMoney }) {
+        state.totalNumber = totalNumber;
+        state.totalMoney = totalMoney;
     }
 }
 
@@ -34,19 +38,19 @@ const actions = {
         let totalMoneyAll = 0;
         let totalNumberAll = 0;
         QueryUserWebCartGoods().then((res) => {
-            console.log(res);
+            // debugger;
             if (res.data.length > 0) {
                 res.data.map((item) => {
-                    totalMoneyAll =
-                        Number(item.Goods_price) * Number(item.Goods_amount);
+                    item.isChecked = true;
+                    totalMoneyAll += Number(item.Goods_price) * Number(item.Goods_amount);
                     totalNumberAll += Number(item.Goods_amount);
                 });
                 totalMoneyAll = totalMoneyAll.toFixed(2);
             } else {
-                totalNumber = 0;
-                totalMoney = 0;
+                totalNumberAll = 0;
+                totalMoneyAll = 0;
             }
-
+            console.log(res);
             commit('set_info', { 'totalNumber': totalNumberAll, 'totalMoney': totalMoneyAll, 'shopCarBox': res.data });
         });
     }

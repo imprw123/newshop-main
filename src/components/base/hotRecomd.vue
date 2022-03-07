@@ -28,8 +28,8 @@ export default{
         }
     },
     mounted(){
-        console.log('lyl')
-        console.log(this.lts)
+        //console.log('lyl')
+       // console.log(this.lts)
     },
     components:{
         shopItem
