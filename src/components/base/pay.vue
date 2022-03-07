@@ -22,6 +22,7 @@
 <script >
 import { PaymentRequest } from "../../api/request";
 import { ElMessage } from "element-plus";
+import { ElLoading } from "element-plus";
 export default {
   name: "pay",
   data() {
@@ -42,6 +43,11 @@ export default {
       return encode;
     },
     payChildren(val, c, u) {
+      const loading = ElLoading.service({
+        lock: true,
+        text: "Loading",
+        background: "rgba(0, 0, 0, 0.5)",
+      });
       //console.log(val, c, u);
       var payData = `[{"I":${val},"C":${c},"U":${u}}]`;
       var dataEnCode = this.encode(payData);
@@ -51,8 +57,10 @@ export default {
           this.url = "";
           this.$nextTick(() => {
             this.url = res.data.Url;
+            loading.close();
           });
         } else if (res.code < 0) {
+          loading.close();
           ElMessage({
             message: res.msg,
             type: "warning",
@@ -66,15 +74,22 @@ export default {
       }
     },
     payChildrenLists(data) {
+      const loading = ElLoading.service({
+        lock: true,
+        text: "Loading",
+        background: "rgba(0, 0, 0, 0.5)",
+      });
       var dataEnCode = this.encode(data);
       PaymentRequest(dataEnCode).then((res) => {
         if (res.code == 0) {
           this.payShowFlag = true;
           this.url = "";
           this.$nextTick(() => {
+            loading.close();
             this.url = res.data.Url;
           });
         } else if (res.code < 0) {
+          loading.close();
           ElMessage({
             message: res.msg,
             type: "warning",
