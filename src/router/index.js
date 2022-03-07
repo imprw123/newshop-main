@@ -119,11 +119,11 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
     if (to.meta.cheakIsLogin) {
         user.dispatch('getNowUser').then(res => {
-            // debugger;
+            debugger;
             if (res.code == 0) {
                 next();
             } else {
-                VueCookies.delete('use_path_argument');
+                //  VueCookies.delete('use_path_argument');
                 window.location.href = `//shop.5211game.com/Login?returnUrl=${escape(window.location.href)}`;
             }
         });
