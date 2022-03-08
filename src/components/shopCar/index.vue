@@ -90,7 +90,7 @@
           <div class="shopCar-row05" style="width: 210px">
             <span>{{ `￥${item.Goods_price * item.Goods_amount}` }}</span>
           </div>
-          <div class="shopCar-row06" style="width: 200px">
+          <div class="shopCar-row06" style="width: 198px">
             <span
               @click="
                 _RemoveWebCartGoods(
