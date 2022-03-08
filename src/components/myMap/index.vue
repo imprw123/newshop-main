@@ -6,12 +6,12 @@
     :element-loading-spinner="svg"
     element-loading-svg-view-box="-10, -10, 50, 50"
     element-loading-background="rgba(0, 0, 0, 0)"
-    v-show="itemlts.length > 0"
+    v-show="collect_boxFn.length > 0"
   >
     <div class="mapListRpg">
       <ul>
         <li
-          v-for="(item, index) in itemlts"
+          v-for="(item, index) in collect_boxFn"
           v-bind:key="index"
           v-bind:style="{
             'margin-right': (index + 1) % 4 == 0 ? '0px' : '12px',
@@ -26,7 +26,7 @@
       layout="prev, pager, next"
       :total="total"
       @current-change="handleCurrentChange"
-      v-if="itemlts.length > 0"
+      v-if="collect_boxFn.length > 0"
     >
     </el-pagination>
   </div>
@@ -34,7 +34,7 @@
   <div class="mapListRpg-box" v-show="itemlts.length == 0"></div>
 </template>
 <script>
-import { QueryUserCollectedRPG } from "../../api/request";
+import { mapActions, mapGetters } from "vuex";
 import rpgItem from "../base/rpg-item.vue";
 export default {
   data() {
@@ -55,17 +55,22 @@ export default {
       `,
     };
   },
+  computed: {
+    ...mapGetters("collectInfo", {
+      collect_numFn: "collect_numFn",
+      collect_boxFn: "collect_boxFn",
+    }),
+  },
   mounted() {
     this._QueryUserCollectedRPG();
   },
   methods: {
+    ...mapActions("collectInfo", {
+      CollectedRPG_Fn: "CollectedRPG_Fn",
+    }),
     _QueryUserCollectedRPG() {
-      return QueryUserCollectedRPG(this.pi, this.ps).then((res) => {
-       // console.log(res);
-        this.loading = false;
-        this.itemlts = res.data.list;
-        this.total = res.data.count;
-      });
+      this.CollectedRPG_Fn({ pi: this.pi, ps: this.ps });
+      this.loading = false;
     },
     handleCurrentChange(val) {
       this.pi = val;

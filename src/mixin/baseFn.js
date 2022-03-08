@@ -30,7 +30,7 @@ let BaseFn = {
         //dota商品推荐
         _dotaRecomment(cid, flagid) {
             dotaRecomment(cid, flagid).then((res) => {
-                console.log(res);
+                // console.log(res);
                 this.hotRecommedLts = res.data.list;
                 this.loading2 = false;
             });
@@ -45,8 +45,8 @@ let BaseFn = {
         //商品内容
         _ClassInfoByCid() {
             ClassInfoByCid(this.pid).then((res) => {
-                console.log('13213213213');
-                console.log(res);
+                //  console.log('13213213213');
+                // console.log(res);
                 this.InforObj = res.data;
                 if (res.data.Class_GoodsInfo) {
                     this.productTypeLts = res.data.Class_GoodsInfo;
@@ -54,8 +54,8 @@ let BaseFn = {
                     this.productTypeLts = [];
                 }
 
-                console.log(1234556)
-                console.log(this.InforObj)
+                //  console.log(1234556)
+                //  console.log(this.InforObj)
             });
         },
         //搜索商品
@@ -74,8 +74,8 @@ let BaseFn = {
                 this.pi,
                 this.ps
             ).then((res) => {
-                console.log("1231");
-                console.log(res);
+                //  console.log("1231");
+                //  console.log(res);
                 this.total = res.data.count;
                 this.shopLtsMore = res.data.list;
                 this.loading = false;
@@ -88,7 +88,7 @@ let BaseFn = {
         },
         _typeTagchangeBtn(val) {
             this.sortName = val;
-            console.log(val);
+            //  console.log(val);
             this._seachFlagPager();
         },
         changeCurPage(val) {

@@ -49,6 +49,7 @@
 </template>
 <script>
 import { AddCollectedRPG, RemoveCollectedRPG } from "../../api/request";
+import { mapActions} from "vuex";
 import { ElMessage } from "element-plus";
 import { ElLoading } from "element-plus";
 export default {
@@ -87,6 +88,9 @@ export default {
     }
   },
   methods: {
+       ...mapActions("collectInfo", {
+      CollectedRPG_Fn: "CollectedRPG_Fn",
+    }),
     AddCollectedRPG(val) {
       const loading = ElLoading.service({
         lock: true,
@@ -96,10 +100,12 @@ export default {
       AddCollectedRPG(val).then((res) => {
         if (res.code == 0) {
           loading.close();
+          this.CollectedRPG_Fn({ pi: 1, ps: 10 });
           ElMessage({
             message: "收藏成功!",
             type: "success",
           });
+          
         } else {
           loading.close();
           ElMessage.error(`收藏失败,${res.msg}!`);
@@ -117,6 +123,7 @@ export default {
       RemoveCollectedRPG(val).then((res) => {
         if (res.code == 0) {
           loading.close();
+          this.CollectedRPG_Fn({ pi: 1, ps: 10 });
           ElMessage({
             message: "取消收藏成功!",
             type: "success",

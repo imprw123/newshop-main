@@ -119,7 +119,7 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
     if (to.meta.cheakIsLogin) {
         user.dispatch('getNowUser').then(res => {
-            debugger;
+            //  debugger;
             if (res.code == 0) {
                 next();
             } else {

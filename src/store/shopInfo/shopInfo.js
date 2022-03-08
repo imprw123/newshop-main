@@ -50,7 +50,7 @@ const actions = {
                 totalNumberAll = 0;
                 totalMoneyAll = 0;
             }
-            console.log(res);
+            // console.log(res);
             commit('set_info', { 'totalNumber': totalNumberAll, 'totalMoney': totalMoneyAll, 'shopCarBox': res.data });
         });
     }

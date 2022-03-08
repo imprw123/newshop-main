@@ -1,5 +1,9 @@
 <template>
-  <InfoView v-bind:InforObj2="InforObj" v-if="InforObj" v-on:initInfo="initInfoFn" />
+  <InfoView
+    v-bind:InforObj2="InforObj"
+    v-if="InforObj"
+    v-on:initInfo="initInfoFn"
+  />
   <HotRecomd
     v-bind:lts="hotRecommedLts"
     v-bind:flagid="512"
@@ -53,8 +57,18 @@ export default {
       classid: this.$route.query.cid,
       flagId: 0,
       pid: this.$route.query.cid,
-     
     };
+  },
+  watch: {
+    $route(to) {
+      if (to.name == "shopRpgDt") {
+        this.pid = this.$route.query.cid;
+        this.classid = this.$route.query.cid;
+        this._dotaRecomment(this.classid, 512);
+        this._seachFlagPager();
+        this._ClassInfoByCid();
+      }
+    },
   },
   mounted() {
     this._dotaRecomment(this.classid, 512);
@@ -73,9 +87,9 @@ export default {
         this._seachFlagPager();
       }
     },
-    initInfoFn(){
+    initInfoFn() {
       this._ClassInfoByCid();
-    }
+    },
   },
   components: {
     HotRecomd,
