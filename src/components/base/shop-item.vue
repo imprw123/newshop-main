@@ -2,7 +2,15 @@
   <div class="modelbox">
     <div class="img-box">
       <router-link :to="{ path: '/detail', query: { cid: item.Goods_id } }">
-        <img v-bind:src="item.Goods_imgPath" class="pic" />
+        <div class="img-model">
+          <img v-bind:src="item.Goods_imgPath" class="pic" />
+          <div class="pr-info" v-if="item.Goods_profile.length <= 100">
+            {{ item.Goods_profile }}
+          </div>
+          <div class="pr-info" v-if="item.Goods_profile.length > 100">
+            {{ `${item.Goods_profile.substring(0, 100)}...` }}
+          </div>
+        </div>
       </router-link>
       <div class="money">
         ￥ <b>{{ item.Goods_price }}</b
@@ -70,7 +78,7 @@ export default {
     };
   },
   mounted() {
-   // console.log(this.item);
+    // console.log(this.item);
   },
   methods: {
     ...mapActions("shopInfo", {
@@ -120,16 +128,40 @@ export default {
   .img-box {
     width: 160px;
     height: 285px;
-    .pic {
+    .img-model {
       width: 160px;
       height: 160px;
-      display: block;
-      border-radius: 4px;
+      position: relative;
+      .pic {
+        width: 160px;
+        height: 160px;
+        display: block;
+        border-radius: 4px;
+      }
+
+      .pr-info {
+        width: 140px;
+        height: 140px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: rgba(0, 0, 0, 0.3);
+        color: #fff;
+        padding: 10px;
+        text-align: justify;
+        display: none;
+        font-size: 12px;
+      }
     }
-    .pic:hover {
+    .img-model:hover .pic {
       transform: scale(1.05);
       transition: 1s ease;
     }
+    .img-model:hover .pr-info {
+      display: block;
+      transition: 0.2s;
+    }
+
     .money {
       font-size: 12px;
       color: #f74a4a;

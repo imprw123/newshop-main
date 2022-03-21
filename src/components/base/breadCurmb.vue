@@ -4,6 +4,7 @@
       <span> <router-link :to="{ path: '/' }">首页</router-link></span>
       <em>/</em>
       <span>{{ breadCurmbName }}</span>
+      <span style="float: right; cursor: pointer;" @click="goback">返回></span>
     </div>
     <div v-if="breadCurmbName == 'shopRpgDt'">
       <span> <router-link :to="{ path: '/' }">首页</router-link></span>
@@ -13,12 +14,18 @@
       >
       <em>/</em>
       <span>{{ breadCurmbName }}</span>
+       <span style="float: right; cursor: pointer;"  @click="goback">返回></span>
     </div>
   </div>
 </template>
 <script>
 export default {
   props: ["breadCurmbName"],
+  methods:{
+    goback(){
+      this.$router.go(-1);
+    }
+  }
 };
 </script>
 
